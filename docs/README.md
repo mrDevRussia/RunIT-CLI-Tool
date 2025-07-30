@@ -9,7 +9,7 @@ RunIT is a professional open-source Windows-only CLI tool that transforms your c
 
 ## ✨ Features
 
-### 🔧 Core Functionality (Phase 1)
+### 🔧 Core Functionality 
 
 - **🚀 Universal File Execution**: Run scripts in Python, JavaScript, HTML, CSS, PHP, Batch, Shell, C/C++, Java, TypeScript, and more with automatic interpreter detection
 - **📝 Smart File Creation**: Generate new files with language-specific boilerplate code and professional templates  
