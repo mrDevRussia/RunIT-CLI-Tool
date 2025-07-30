@@ -1,0 +1,27 @@
+{
+  "packages": {
+    "preview_RunIT@latest": {
+      "name": "preview_RunIT",
+      "version": "1.0.0",
+      "description": "Preview HTML files in the browser",
+      "main_file": "preview.py",
+      "dependencies": [],
+      "installed": false,
+      "install_path": null
+    },
+    "Edit_RunIT@latest": {
+      "name": "Edit_RunIT",
+      "version": "1.0.0",
+      "description": "Advanced file editing capabilities",
+      "main_file": "editor.py",
+      "dependencies": [],
+      "installed": false,
+      "install_path": null
+    }
+  },
+  "core_tool": {
+    "name": "RunIT",
+    "version": "1.1.0",
+    "last_updated": null
+  }
+}
