@@ -44,6 +44,6 @@ RunIT is a professional open-source Windows-only CLI tool that transforms your c
 
 1. **Download RunIT**
    ```cmd
-   git clone https://github.com/your-repo/runit.git
-   cd runit
+   git clone https://github.com/mrDevRussia/RunIT-CLI-Tool.git
+   cd RunITCLI
    
