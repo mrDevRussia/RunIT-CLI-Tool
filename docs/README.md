@@ -18,32 +18,143 @@ RunIT is a professional open-source Windows-only CLI tool that transforms your c
 - **📊 Comprehensive File Analysis**: Get detailed statistics, code structure analysis, and metadata for any file
 - **💡 Interactive Help System**: Context-aware help with examples and detailed command documentation
 - **⚡ REPL Interface**: Stay productive with a persistent, interactive command environment
+- **🔄 Auto-Update System**: Keep your tool up to date with the latest features and improvements
 
-### 🎯 Supported File Types
+### ⚠️ Important Note on Folder Access
 
-| Category | Extensions | Execution Method |
-|----------|------------|------------------|
-| **Programming** | `.py`, `.js`, `.ts`, `.java`, `.c`, `.cpp`, `.php` | Auto-detected interpreters/compilers |
-| **Web** | `.html`, `.css`, `.json`, `.xml` | Default system programs |
-| **Scripts** | `.bat`, `.cmd`, `.sh`, `.ps1` | Native execution |
-| **Documents** | `.txt`, `.md`, `.log` | Default text editors |
+For security reasons, RunIT can only access and manage files within its installation directory. To work with files:
+1. Copy or move them into the RunIT tool's directory
+2. Create new files directly using RunIT's commands
+3. Use the designated folders within the tool's directory structure
 
-## 🚀 Quick Start
+## 🛠️ Available Commands
 
-### Prerequisites
+### 🔧 File Execution
+```bash
+run <filename>                 # Run files with auto-detection
 
-- **Windows 10/11** (Windows-only tool)
-- **Python 3.6+** (included with Windows or from [python.org](https://python.org))
-- **Optional**: Install interpreters for languages you want to run:
-  - [Node.js](https://nodejs.org/) for JavaScript/TypeScript
-  - [PHP](https://www.php.net/) for PHP scripts
-  - [GCC/MinGW](https://www.mingw-w64.org/) for C/C++ compilation
-  - [Java JDK](https://openjdk.java.net/) for Java development
+# Examples:
+run script.py                 # Execute Python script
+run app.js                    # Execute JavaScript with Node.js
+run page.html                 # Open HTML in default browser
+run program.bat               # Execute batch file
+run code.c                    # Compile and run C program
+```
 
-### Installation
+### 📝 File Creation
+```bash
+create <language> <filename>   # Create new files with boilerplate
 
-1. **Download RunIT**
-   ```cmd
-   git clone https://github.com/mrDevRussia/RunIT-CLI-Tool.git
-   cd runit
-   
+# Examples:
+create python hello.py        # Create Python script
+create javascript app.js      # Create JavaScript file
+create html index.html        # Create HTML page
+create batch script.bat       # Create batch file
+```
+
+### 🔍 File Search
+```bash
+search <keyword> <filename>    # Search for keywords in files
+
+# Examples:
+search "function" script.py   # Find all functions
+search "TODO" *.txt           # Find TODO comments
+search "error" log.txt        # Find error messages
+```
+
+### 🛡️ File Scanning
+```bash
+scan <filename>               # Scan files for suspicious patterns
+
+# Examples:
+scan script.py                # Check for malicious code
+scan download.exe             # Virus pattern detection
+scan suspicious.js            # Analyze JavaScript safety
+```
+
+### 📊 File Information
+```bash
+info <filename>               # Get detailed file information
+
+# Examples:
+info document.txt             # Show file stats
+info source.py                # Analyze code structure
+info data.json                # Content analysis
+```
+
+### 📦 Installation System (New in v1.1)
+```bash
+install <package@latest>      # Install packages
+update <package@latest>       # Update packages or tool
+version                       # Show version and package status
+
+# Examples:
+install preview_RunIT@latest  # Install HTML preview package
+install Edit_RunIT@latest     # Install advanced editor package
+update RunIT@latest           # Update the main tool
+```
+
+### 📁 File Management (New in v1.1)
+```bash
+show <file_or_directory>      # Show file/directory structure
+edit <filename> [editor]      # Edit files with available editors
+go <directory_path>          # Navigate to directory
+
+# Examples:
+show project/                 # Display directory tree
+show main.py                  # Show file details and structure
+edit config.txt              # Edit file with default editor
+go C:\Users\Projects          # Change to directory
+```
+
+### 🎯 Package Commands
+```bash
+preview <filename.html>       # Preview HTML files in browser (requires preview_RunIT package)
+```
+
+### 🔧 Utility Commands
+```bash
+help [command]               # Show help (general or specific)
+test                         # Test RunIT functionality
+runai                        # Use offline AI assistant
+clear                        # Clear the terminal screen
+exit / quit                  # Exit RunIT
+```
+
+## 🌟 Key Advantages
+
+- **🎯 Simplified Workflow**: Execute and manage multiple file types from a single interface
+- **⚡ Rapid Development**: Quick file creation with smart templates and boilerplate code
+- **🔍 Enhanced Security**: Built-in virus scanning for safer code execution
+- **📊 Deep Insights**: Comprehensive file analysis and statistics
+- **🎨 User-Friendly**: Intuitive commands and helpful documentation
+- **🔄 Always Updated**: Stay current with automatic updates
+- **💻 Windows Optimized**: Designed specifically for Windows environments
+
+## 📚 Documentation
+
+For detailed documentation on all features and commands, type:
+```cmd
+help
+```
+
+Or for specific command help:
+```cmd
+help <command>
+```
+
+## 🤝 Contributing
+
+We welcome contributions! Feel free to submit issues, feature requests, or pull requests to help improve RunIT.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
+
+💡 **Pro Tips**: 
+- Pin RunIT to your taskbar or create a desktop shortcut for quick access!
+- Use the `runai` command for AI-powered coding assistance
+- Install the preview_RunIT package for enhanced HTML development
+

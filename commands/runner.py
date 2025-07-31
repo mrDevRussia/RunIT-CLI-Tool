@@ -221,8 +221,11 @@ class FileRunner:
             if len(command) > 1:  # Has interpreter
                 interpreter = command[0]
                 if not self.check_interpreter_availability(interpreter):
-                    print(f"❌ Interpreter '{interpreter}' not found on system.")
-                    print(f"Please install {interpreter} to run {file_path.suffix} files.")
+                    if file_path.suffix.lower() == '.html':
+                        print("ℹ️ HTML files can be viewed using the 'preview' command and modified using the 'edit' command.")
+                    else:
+                        print(f"❌ Interpreter '{interpreter}' not found on system.")
+                        print(f"Please install {interpreter} to run {file_path.suffix} files.")
                     return
             
             print(f"🚀 Running {file_path.name}...")
