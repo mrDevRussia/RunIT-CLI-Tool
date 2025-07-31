@@ -12,12 +12,12 @@ class LanguageUtils:
     Utility class for programming language detection and metadata.
     Provides methods for identifying languages, getting syntax information, and language-specific operations.
     """
-
     def __init__(self):
         """Initialize language utilities with language definitions."""
         self.language_definitions = self._init_language_definitions()
 
     def _init_language_definitions(self):
+      
         """
         Initialize comprehensive language definitions with metadata.
         

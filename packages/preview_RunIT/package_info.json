@@ -1,0 +1,8 @@
+{
+  "name": "preview_RunIT",
+  "version": "1.0.0",
+  "description": "Preview HTML files in browser",
+  "commands": [
+    "preview"
+  ]
+}

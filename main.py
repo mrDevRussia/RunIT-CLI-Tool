@@ -4,7 +4,7 @@ RunIT - Smart Terminal Assistant for Windows
 A professional CLI tool for running, creating, and analyzing code files.
 
 Author: RunIT Development Team
-Version: 1.1.0 (Phase 2 - Package System)
+Version: 1.1.0
 License: MIT
 """
 
@@ -76,11 +76,11 @@ class RunITCLI:
         """Display the RunIT welcome banner."""
         banner = """
 ╔══════════════════════════════════════════════════════════════╗
-║                        🚀 RunIT v1.1.0                      ║
+║                         RunIT v1.1.0                         ║
 ║              Smart Terminal Assistant for Windows            ║
-║                    📦 Package System Enabled                ║
+║                Your assistant between your hands             ║
 ╠══════════════════════════════════════════════════════════════╣
-║  Type 'help' for commands | Type 'version' for packages     ║
+║     Type 'help' for commands | Type 'version' for packages   ║
 ╚══════════════════════════════════════════════════════════════╝
 """
         print(banner)

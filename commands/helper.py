@@ -20,9 +20,9 @@ class HelpDisplay:
         """Display general help information with all available commands."""
         help_text = """
 ╔══════════════════════════════════════════════════════════════╗
-║                    🚀 RunIT v1.1.0 - Help                   ║
+║                      RunIT v1.1.0 - Help                     ║
 ║              Smart Terminal Assistant for Windows            ║
-║                    📦 Package System Enabled                ║
+║                Always for you, alwways with you              ║
 ╚══════════════════════════════════════════════════════════════╝
 
 📋 AVAILABLE COMMANDS:
@@ -31,7 +31,7 @@ class HelpDisplay:
    run <filename>                 Run files with auto-detection
    
    Examples:
-   • run script.py               → Execute Python script
+   • run script.py              → Execute Python script
    • run app.js                 → Execute JavaScript with Node.js
    • run page.html              → Open HTML in default browser
    • run program.bat            → Execute batch file
@@ -89,14 +89,15 @@ class HelpDisplay:
    • show project/                → Display directory tree
    • show main.py                 → Show file details and structure
    • edit config.txt              → Edit file with default editor
-   • go C:\\Users\\Projects        → Change to directory
+   • go C:\\Users\\Projects       → Change to directory
 
 🎯 PACKAGE COMMANDS (When Installed):
    preview <filename.html>        Preview HTML files in browser
    
 🔧 UTILITY COMMANDS:
-   help [command]                 Show help (general or specific)
+   help [command]                Show help (general or specific)
    test                          Test RunIT functionality
+   runai                         Use offline AI assistant
    clear                         Clear the terminal screen
    exit / quit                   Exit RunIT
 
@@ -105,7 +106,7 @@ class HelpDisplay:
 🎯 SUPPORTED FILE TYPES:
 
 Programming Languages:
-• Python (.py)         • JavaScript (.js)      • TypeScript (.ts)
+• Python (.py)        • JavaScript (.js)     • TypeScript (.ts)
 • C (.c)              • C++ (.cpp)           • Java (.java)
 • PHP (.php)          • Batch (.bat, .cmd)   • Shell (.sh)
 
