@@ -1,0 +1,119 @@
+RunIT – Tool Update Summary
+
+RunIT has evolved into a powerful local desktop tool that enhances your development workflow by combining essential features with creative,
+ productivity-focused utilities — all in a lightweight, offline-first environment.
+
+
+____________________________________________________
+
+Core Development Main Features:
+
+
+
+-RunIT Hosting
+
+  Host and preview your static websites or frontend projects locally with a single command.
+
+  Works fully offline
+
+  If you choose to share your project via the internet,
+  RunIT integrates with LocalTunnel to generate a temporary public link (requires internet only for this part)
+
+
+
+-Language Converter
+
+  Convert source code between popular programming languages instantly.
+
+  Examples: JavaScript to Python, HTML to Markdown, etc.
+
+  Ideal for learning, syntax comparison, or migrating codebases
+
+
+____________________________________________________
+
+
+Upcoming:
+
+Productivity and Creative packages:
+
+
+
+
+-Zen Mode
+
+  A minimal, focused coding interface:
+
+  Displays one line of code at a time
+
+  Shows a calming or motivational phrase
+
+  Designed for deep work and mental clarity
+
+Command: " install zen-mode_RunIT@latest "
+
+
+
+
+
+-Challenge Me
+
+  Generates a short daily coding challenge:
+
+  Language-aware challenges
+
+  Keeps your problem-solving skills sharp
+
+Command: " install challenge-me_RunIT@latest "
+
+
+
+
+-Random Bug
+
+  Creates a random piece of broken code:
+
+  Practice debugging real-world scenarios
+
+  Useful for interview preparation and logical thinking
+
+Command: " install random-bug_RunIT@latest "
+
+
+
+
+
+-Brain Refresh
+
+  Triggers a short logic puzzle or programming-related riddle:
+
+  Refresh your mind during long coding sessions
+
+  Great for improving cognitive flexibility
+
+Command: " install brain-refresh_RunIT@latest "
+
+
+
+
+
+-Dev Quotes
+
+  Displays curated programming quotes:
+
+  Ranges from inspirational to sarcastic
+
+  Helps you stay motivated or entertained during breaks
+
+Command: " install dev-quotes_RunIT@latest "
+
+
+____________________________________________________
+
+Notes
+
+All tools are available offline except for public link sharing through LocalTunnel
+
+Static site hosting supports folders (e.g. HTML + CSS + JS assets), not just single files
+
+Hosting links are temporary and auto-expire (default: 24 hours)

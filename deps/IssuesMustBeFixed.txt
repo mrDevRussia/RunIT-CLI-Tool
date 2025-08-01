@@ -1,0 +1,5 @@
+1- runai file:<file>
+
+2- package installation system from github
+
+3- add a change log ( Easy )

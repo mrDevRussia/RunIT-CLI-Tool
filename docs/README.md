@@ -1,6 +1,6 @@
 # 🚀 RunIT - Smart Terminal Assistant for Windows
 
-[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/runit/releases)
+[![Version](https://img.shields.io/badge/version-1.2.1-blue.svg)](https://github.com/runit/releases)
 [![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
 [![Python](https://img.shields.io/badge/python-3.6+-green.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
@@ -19,6 +19,7 @@ RunIT is a professional open-source Windows-only CLI tool that transforms your c
 - **💡 Interactive Help System**: Context-aware help with examples and detailed command documentation
 - **⚡ REPL Interface**: Stay productive with a persistent, interactive command environment
 - **🔄 Auto-Update System**: Keep your tool up to date with the latest features and improvements
+- **🌐 Static Website Hosting**: Host and preview your static websites or frontend projects locally with a single command, with optional public URL sharing via LocalTunnel
 
 ### ⚠️ Important Note on Folder Access
 
@@ -98,9 +99,34 @@ update RunIT@latest           # Update the main tool
 ```bash
 show <file_or_directory>      # Show file/directory structure
 edit <filename> [editor]      # Edit files with available editors
+```
+
+### 🌐 Website Hosting & Deployment (New in v1.2)
+```bash
+deploy <site_folder>          # Host and preview static websites locally
+share                         # Generate public URL for deployed site
+
+# Examples:
+deploy website/              # Start local server for website folder
+deploy frontend/dist         # Host built frontend project
+share                        # Get public URL (requires internet) (This feautre not available right now)
+```
+
+The website hosting feature provides:
+- 🚀 Instant local server setup for static websites
+- 💻 Works fully offline for local development
+- 🌍 Optional public URL generation via LocalTunnel
+- 📱 Mobile-friendly testing with local network access
+- 🔄 Real-time updates as you modify your files
+
+### 📁 Directory Navigation
+```bash
 go <directory_path>          # Navigate to directory
 
 # Examples:
+go C:\Users\Projects        # Change to projects directory
+go ..                       # Go up one directory
+```
 show project/                 # Display directory tree
 show main.py                  # Show file details and structure
 edit config.txt              # Edit file with default editor
@@ -110,6 +136,16 @@ go C:\Users\Projects          # Change to directory
 ### 🎯 Package Commands
 ```bash
 preview <filename.html>       # Preview HTML files in browser (requires preview_RunIT package)
+```
+
+### 🔄 Code Conversion (New in v1.2)
+```bash
+convert <source_file> <target_language>  # Convert code between languages
+
+# Examples:
+convert script.js python    # Convert JavaScript to Python
+convert code.py javascript  # Convert Python to JavaScript
+convert page.html markdown  # Convert HTML to Markdown
 ```
 
 ### 🔧 Utility Commands

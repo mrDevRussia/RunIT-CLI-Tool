@@ -20,7 +20,7 @@ class HelpDisplay:
         """Display general help information with all available commands."""
         help_text = """
 ╔══════════════════════════════════════════════════════════════╗
-║                      RunIT v1.1.0 - Help                     ║
+║                      RunIT v1.2.0 - Help                     ║
 ║              Smart Terminal Assistant for Windows            ║
 ║                Always for you, alwways with you              ║
 ╚══════════════════════════════════════════════════════════════╝
@@ -93,6 +93,15 @@ class HelpDisplay:
 
 🎯 PACKAGE COMMANDS (When Installed):
    preview <filename.html>        Preview HTML files in browser
+   
+🌐 HOSTING & DEPLOYMENT:
+   deploy <site_folder>           Host and preview static websites locally
+   share                          Generate public URL for deployed site
+   
+   Examples:
+   • deploy website/             → Start local server for website
+   • deploy frontend/dist        → Host built frontend project
+   • share                       → Get public URL (requires internet)
    
 🔧 UTILITY COMMANDS:
    help [command]                Show help (general or specific)
@@ -180,6 +189,27 @@ NOTES:
    • Compilation languages (C, C++, Java) will prompt for compile+run
    • Files opened with 'start' use Windows default program association
    • RunIT checks interpreter availability before execution
+""",
+
+            'convert': """
+🔄 CONVERT COMMAND
+
+Syntax: convert <source_file> <target_language>
+
+Description:
+  Convert source code between different programming languages.
+  Currently supports:
+  • JavaScript ↔ Python (two-way conversion)
+  • HTML → Markdown (one-way conversion)
+
+Examples:
+  convert script.js python    # Converts JavaScript to Python
+  convert app.py javascript   # Converts Python to JavaScript
+  convert page.html markdown  # Converts HTML to Markdown
+
+Output:
+  The converted code will be saved to a new file with appropriate extension
+  in the same directory as the source file.
 """,
 
             'create': """

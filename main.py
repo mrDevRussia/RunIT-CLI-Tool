@@ -25,6 +25,8 @@ from commands.helper import HelpDisplay
 from commands.ai_assistant import AIAssistant
 from commands.package_manager import PackageManager
 from commands.file_manager import FileManager
+from commands.deployer import Deployer
+from commands.converter import Converter
 from utils.logger import Logger
 
 
@@ -46,6 +48,8 @@ class RunITCLI:
         self.ai_assistant = AIAssistant()
         self.package_manager = PackageManager()
         self.file_manager = FileManager()
+        self.deployer = Deployer()
+        self.converter = Converter()
         self.running = True
         
         # Command mapping - includes new v1.1 commands
@@ -70,13 +74,60 @@ class RunITCLI:
             'test': self.cmd_test,
             # Package commands (when packages are installed)
             'preview': self.cmd_preview,
+            # Website deployment commands
+            'deploy': self.cmd_deploy,
+            'stopdeploy': self.cmd_stopdeploy,
+            'share': self.cmd_share,
+            'setport': lambda args: self.deployer.set_port(int(args[0])) if args and args[0].isdigit() else print("❌ Please provide a valid port number (e.g. 'setport 8080')"),
+            'convert': self.cmd_convert,
         }
+
+    def cmd_convert(self, args):
+        """Convert source code between different programming languages."""
+        if len(args) != 2:
+            self.logger.error("Invalid arguments for convert command")
+            print("❌ Usage: convert <source_file> <target_language>")
+            print("Supported conversions:")
+            for source, target in self.converter.get_supported_conversions():
+                print(f"  • {source} → {target}")
+            return
+
+        source_file = args[0]
+        target_language = args[1].lower()
+
+        if not os.path.exists(source_file):
+            self.logger.error(f"Source file not found: {source_file}")
+            print(f"❌ Source file '{source_file}' not found")
+            return
+
+        converted_code = self.converter.convert_code(source_file, target_language)
+        if converted_code:
+            # Map target language to correct file extension
+            ext_map = {
+                'python': 'py',
+                'javascript': 'js',
+                'markdown': 'md'
+            }
+            target_ext = ext_map.get(target_language, target_language)
+            output_file = f"{os.path.splitext(source_file)[0]}.{target_ext}"
+            try:
+                with open(output_file, 'w', encoding='utf-8') as f:
+                    f.write(converted_code)
+                self.logger.info(f"Successfully converted {source_file} to {target_language}")
+                print(f"✅ Code converted successfully! Output saved to: {output_file}")
+            except Exception as e:
+                self.logger.error(f"Failed to save converted code: {str(e)}")
+                print(f"❌ Error saving converted code: {str(e)}")
+        else:
+            self.logger.error(f"Code conversion failed for {source_file} to {target_language}")
+            print("❌ Code conversion failed. Please check the supported conversions and try again.")
+
 
     def display_banner(self):
         """Display the RunIT welcome banner."""
         banner = """
 ╔══════════════════════════════════════════════════════════════╗
-║                         RunIT v1.1.0                         ║
+║                         RunIT v1.2.0                         ║
 ║              Smart Terminal Assistant for Windows            ║
 ║                Your assistant between your hands             ║
 ╠══════════════════════════════════════════════════════════════╣
@@ -193,6 +244,29 @@ class RunITCLI:
             # General AI assistance
             response = self.ai_assistant.get_code_assistance(query)
             self.ai_assistant.format_ai_response(response)
+            
+    def cmd_deploy(self, args):
+        """Handle 'deploy' command to start a local server for static websites."""
+        if not args:
+            print("❌ Error: Please specify a folder to deploy")
+            print("Usage: deploy <folder>")
+            print("Example: deploy website")
+            return
+        
+        folder_path = args[0]
+        if not os.path.isdir(folder_path):
+            print(f"❌ Error: '{folder_path}' is not a valid directory")
+            return
+            
+        self.deployer.deploy_site(folder_path)
+
+    def cmd_stopdeploy(self, args):
+        """Handle 'stopdeploy' command to stop the local server."""
+        self.deployer.stop_deployment()
+        
+    def cmd_share(self, args):
+        """Handle 'share' command to generate a public URL for the deployed site."""
+        self.deployer.generate_public_url()
 
     def cmd_clear(self, args):
         """Handle 'clear' command to clear the terminal."""
@@ -345,7 +419,7 @@ class RunITCLI:
                 # Skip empty inputs
                 if not user_input:
                     continue
-                
+                    
                 # Parse and execute command
                 command, args = self.parse_command(user_input)
                 if command:
@@ -407,7 +481,7 @@ def show_help():
     """Show command line help."""
     help_text = """
 ╔══════════════════════════════════════════════════════════════╗
-║                     RunIT CLI Tool v2.0.0                   ║
+║                     RunIT CLI Tool v1.2.0                    ║
 ║              Smart Terminal Assistant for Windows            ║
 ╚══════════════════════════════════════════════════════════════╝
 
@@ -432,6 +506,15 @@ COMMANDS (in interactive mode):
   info <file>             Show comprehensive file information
   help [command]          Show help for commands
   clear                   Clear the terminal
+  deploy <folder>         Deploy a static website from the specified folder
+  stopdeploy              Stop any running deployment servers
+  share                   Generate a public URL for the deployed site
+  setport <number>        Change the deployment port (e.g. 'setport 8080')
+
+Note: If you encounter 'Port is already in use' error:
+1. Try running 'stopdeploy' command first
+2. Or change the port using 'setport <number>' command
+3. Then try deploying again
   exit, quit              Exit RunIT
 
 EXAMPLES:

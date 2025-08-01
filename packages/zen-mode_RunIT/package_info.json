@@ -1,0 +1,15 @@
+{
+  "name": "zen-mode_RunIT",
+  "version": "1.0.0",
+  "description": "A minimal, focused coding interface:
+
+  Displays one line of code at a time
+
+  Shows a calming or motivational phrase
+
+  Designed for deep work and mental clarity
+",
+  "commands": [
+    "zmode"
+  ]
+}

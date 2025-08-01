@@ -1,15 +1,7 @@
-# RunIT Offline Dependencies
-# All dependencies are bundled with the installation
-
-Python Standard Library:
-- subprocess (built-in)
-- pathlib (built-in)
-- os (built-in)
-- sys (built-in)
-- re (built-in)
-- shutil (built-in)
-- datetime (built-in)
-- json (built-in)
-
-No external dependencies required for core functionality.
-All features work offline with Python 3.9+
+requests>=2.31.0
+websockets>=11.0.3
+asyncio>=3.4.3
+python-dotenv>=1.0.0
+colorama==0.4.5
+tqdm>=4.65.0
+localtunnel-client>=1.0.3
