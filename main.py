@@ -4,13 +4,14 @@ RunIT - Smart Terminal Assistant for Windows
 A professional CLI tool for running, creating, and analyzing code files.
 
 Author: RunIT Development Team
-Version: 1.1.0
+Version: 1.2.0
 License: MIT
 """
 
 import sys
 import os
 import shlex
+import json
 from pathlib import Path
 
 # Add the project root to Python path
@@ -52,7 +53,7 @@ class RunITCLI:
         self.converter = Converter()
         self.running = True
         
-        # Command mapping - includes new v1.1 commands
+        # Initialize commands dictionary
         self.commands = {
             'run': self.cmd_run,
             'create': self.cmd_create,
@@ -74,13 +75,90 @@ class RunITCLI:
             'test': self.cmd_test,
             # Package commands (when packages are installed)
             'preview': self.cmd_preview,
-            # Website deployment commands
+            # Website deployment commands new v1.2.0 commands
             'deploy': self.cmd_deploy,
             'stopdeploy': self.cmd_stopdeploy,
             'share': self.cmd_share,
             'setport': lambda args: self.deployer.set_port(int(args[0])) if args and args[0].isdigit() else print("❌ Please provide a valid port number (e.g. 'setport 8080')"),
             'convert': self.cmd_convert,
         }
+        
+        # Load package commands
+        self._load_package_commands()
+
+    def _load_package_commands(self):
+        """Load commands from installed packages."""
+        installed_packages = self.package_manager.get_installed_packages()
+        for package_name, package_info in installed_packages.items():
+            if package_info['installed'] and package_info['install_path']:
+                try:
+                    # Get absolute package path
+                    package_path = os.path.abspath(os.path.join(os.path.dirname(__file__), package_info['install_path']))
+                    self.logger.info(f"Loading package {package_name} from {package_path}")
+                    
+                    # Add package path to sys.path if not already present
+                    if package_path not in sys.path:
+                        sys.path.insert(0, package_path)
+                        self.logger.info(f"Added {package_path} to sys.path")
+                    
+                    # Print current sys.path for debugging
+                    self.logger.info(f"Current sys.path: {sys.path}")
+                    
+                    # Print current working directory
+                    self.logger.info(f"Current working directory: {os.getcwd()}")
+                    
+                    # Get module name without .py extension
+                    module_name = package_info['main_file'].replace('.py', '')
+                    self.logger.info(f"Importing module {module_name}")
+                    
+                    # Remove module from sys.modules if already imported
+                    if module_name in sys.modules:
+                        del sys.modules[module_name]
+                        self.logger.info(f"Removed {module_name} from sys.modules")
+                    
+                    # Import the module
+                    try:
+                        package_module = __import__(module_name)
+                        self.logger.info(f"Successfully imported {module_name}")
+                        self.logger.info(f"Module attributes: {dir(package_module)}")
+                    except ImportError as e:
+                        self.logger.error(f"Failed to import {module_name}: {str(e)}")
+                        continue
+                    
+                    # Check if module has handle_command function
+                    if hasattr(package_module, 'handle_command'):
+                        self.logger.info(f"Found handle_command in {module_name}: {getattr(package_module, 'handle_command')}")
+                        self.logger.info(f"Found handle_command in {module_name}")
+                        # Load package info
+                        package_info_path = os.path.join(package_path, 'package_info.json')
+                        if os.path.exists(package_info_path):
+                            with open(package_info_path) as f:
+                                pkg_info = json.load(f)
+                                self.logger.info(f"Loaded package info from {package_info_path}")
+                                
+                                # Register each command from package_info.json
+                                for cmd_name in pkg_info.get('commands', {}).keys():
+                                    # Create a closure to capture command name and module
+                                    def create_handler(cmd, mod):
+                                        def handler(args):
+                                            try:
+                                                return mod.handle_command(cmd, args)
+                                            except Exception as e:
+                                                self.logger.error(f"Error executing command {cmd}: {str(e)}")
+                                                return False
+                                        return handler
+                                    
+                                    # Register command handler
+                                    self.commands[cmd_name] = create_handler(cmd_name, package_module)
+                                    self.logger.info(f"Registered command: {cmd_name}")
+
+                                    self.logger.info(f"Registered command '{cmd_name}' from package {package_name}")
+                        else:
+                            self.logger.error(f"Package info file not found: {package_info_path}")
+                    else:
+                        self.logger.error(f"Module {module_name} does not have handle_command function")
+                except Exception as e:
+                    self.logger.error(f"Failed to load package {package_name}: {str(e)}")
 
     def cmd_convert(self, args):
         """Convert source code between different programming languages."""
@@ -281,16 +359,19 @@ class RunITCLI:
 
     # New v1.1 commands
     def cmd_install(self, args):
-        """Handle 'install' command to install packages."""
+        """Install a package from GitHub repository."""
         if not args:
-            print("❌ Error: Please specify a package to install")
-            print("Usage: install <package_name@latest>")
-            print("Available packages:")
-            self.package_manager.list_packages()
+            print("❌ Please specify a package to install")
+            print("Usage: install <package_name>")
             return
-        
+            
         package_name = args[0]
-        self.package_manager.install_package(package_name)
+        print(f"📦 Installing package {package_name}...")
+        
+        if self.package_manager.install_package(package_name):
+            print(f"✅ Successfully installed {package_name}")
+        else:
+            print(f"❌ Failed to install {package_name}. Check logs for details.")
 
     def cmd_update(self, args):
         """Handle 'update' command to update packages or the tool."""
@@ -519,7 +600,7 @@ Note: If you encounter 'Port is already in use' error:
 
 EXAMPLES:
   RunIT.bat                     # Start interactive mode
-  RunIT.bat --help              # Show this help
+  RunIT.bat help                # Show this help
   RunIT.bat test                # Test installation
   
 For detailed documentation, see docs/README.md
@@ -528,7 +609,7 @@ For detailed documentation, see docs/README.md
 
 def show_version():
     """Show version information."""
-    print("RunIT CLI Tool v2.0.0 (Phase 2)")
+    print("RunIT CLI Tool v1.2.0)")
     print("Copyright (c) 2025 RunIT Development Team")
     print("License: MIT")
     

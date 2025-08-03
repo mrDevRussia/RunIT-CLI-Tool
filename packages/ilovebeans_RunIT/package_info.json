@@ -1,0 +1,16 @@
+	{
+    "name": "ilovebeans",
+    "version": "1.0.0",
+    "description": "This is a personal packaget just for testing purpose",
+    "author": "RunIT Team",
+    "main_file": "ilovebeans.py",
+    "dependencies": [],
+    "commands": {
+        "bean": {
+            "description": "just shows I love beans!",
+            "usage": "bean"
+        }
+    },
+    "minimum_runit_version": "1.2.0",
+    "license": "MIT"
+}

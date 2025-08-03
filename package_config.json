@@ -15,10 +15,10 @@
   },
   "installed_packages": [
     "preview_RunIT@latest",
-    "Edit_RunIT@latest"
+    "zen-mode_RunIT@latest"
   ],
   "package_paths": {
     "preview_RunIT@latest": "packages/preview_RunIT",
-    "Edit_RunIT@latest": "packages/Edit_RunIT"
+    "zen-mode_RunIT@latest": "packages/zen-mode_RunIT"
   }
 }

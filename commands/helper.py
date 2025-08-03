@@ -27,6 +27,8 @@ class HelpDisplay:
 
 📋 AVAILABLE COMMANDS:
 
+
+
 🔧 FILE EXECUTION:
    run <filename>                 Run files with auto-detection
    
@@ -37,6 +39,8 @@ class HelpDisplay:
    • run program.bat            → Execute batch file
    • run code.c                 → Compile and run C program
 
+
+
 📝 FILE CREATION:
    create <language> <filename>   Create new files with boilerplate
    
@@ -46,6 +50,8 @@ class HelpDisplay:
    • create html index.html      → Create HTML page
    • create batch script.bat     → Create batch file
 
+
+
 🔍 FILE SEARCH:
    search <keyword> <filename>    Search for keywords in files
    
@@ -53,6 +59,8 @@ class HelpDisplay:
    • search "function" script.py → Find all functions
    • search "TODO" *.txt         → Find TODO comments
    • search "error" log.txt      → Find error messages
+
+
 
 🛡️  FILE SCANNING:
    scan <filename>                Scan files for suspicious patterns
@@ -62,6 +70,8 @@ class HelpDisplay:
    • scan download.exe           → Virus pattern detection
    • scan suspicious.js          → Analyze JavaScript safety
 
+
+
 📊 FILE INFORMATION:
    info <filename>                Get detailed file information
    
@@ -69,6 +79,8 @@ class HelpDisplay:
    • info document.txt           → Show file stats
    • info source.py              → Analyze code structure
    • info data.json              → Content analysis
+
+
 
 📦 PACKAGE SYSTEM (NEW v1.1):
    install <package@latest>       Install packages
@@ -79,6 +91,8 @@ class HelpDisplay:
    • install preview_RunIT@latest → Install HTML preview package
    • install Edit_RunIT@latest    → Install advanced editor package
    • update RunIT@latest          → Update the main tool
+
+
 
 📁 FILE MANAGEMENT (NEW v1.1):
    show <file_or_directory>       Show file/directory structure
@@ -91,18 +105,43 @@ class HelpDisplay:
    • edit config.txt              → Edit file with default editor
    • go C:\\Users\\Projects       → Change to directory
 
+
+
 🎯 PACKAGE COMMANDS (When Installed):
    preview <filename.html>        Preview HTML files in browser
-   
-🌐 HOSTING & DEPLOYMENT:
+   zen <filename>                Display file in zen mode (one line at a time)
+
+   Examples:
+   • zen script.py               → Read Python file in zen mode
+   • zen document.txt            → Read text file in zen mode
+
+
+
+🔄 FILE CONVERTER (NEW v1.2):
+   convert <source_file> <target_language> 
+
+   Examples:
+   •convert script.js python    → Converts JavaScript to Python
+   •convert app.py javascript   → Converts Python to JavaScript
+   •convert page.html markdown  → Converts HTML to Markdown
+
+
+
+🌐 HOSTING & DEPLOYMENT (NEW v1.2):
    deploy <site_folder>           Host and preview static websites locally
    share                          Generate public URL for deployed site
-   
+   stopdeploy                     To shutdown the localhost server 
+   setport                        Set your local host port, Default: 8000
+
+
+
    Examples:
    • deploy website/             → Start local server for website
    • deploy frontend/dist        → Host built frontend project
    • share                       → Get public URL (requires internet)
    
+
+
 🔧 UTILITY COMMANDS:
    help [command]                Show help (general or specific)
    test                          Test RunIT functionality
@@ -150,6 +189,28 @@ Other:
             command (str): Command name to show help for
         """
         command_help = {
+            'zen': """
+🧘 ZEN MODE - Mindful Code Reading
+
+SYNTAX:
+   zen <filename>
+
+DESCRIPTION:
+   Display file contents one line at a time in a minimalist, focused interface.
+   Includes calming phrases and a distraction-free environment for better code comprehension.
+
+FEATURES:
+   • One-line-at-a-time display
+   • Calming messages between lines
+   • Supports any text-based file
+   • Navigation with Enter key
+   • Distraction-free reading experience
+
+EXAMPLES:
+   • zen script.py       → Read Python file in zen mode
+   • zen document.txt    → Read text file mindfully
+   • zen code.js        → Review JavaScript code with focus
+""",
             'run': """
 🚀 RUN COMMAND - Execute Files
 
@@ -498,7 +559,7 @@ NOTES:
             print(command_help[command])
         else:
             print(f"❌ No detailed help available for command: '{command}'")
-            print("Available commands: run, create, search, scan, info, help, clear, exit")
+            print("Available commands: run, create, search, scan, info, help, clear, exit, zen, preview")
             print("Type 'help' for general help.")
 
     def show_startup_tips(self):
@@ -511,7 +572,8 @@ NOTES:
 3. 🔍 Search in files:       search "TODO" readme.txt
 4. 🛡️  Scan for viruses:     scan suspicious_file.js
 5. 📊 Get file info:         info document.txt
-6. 🔧 Get help anytime:      help [command]
+6. 🧘 Read in zen mode:      zen script.py
+7. 🔧 Get help anytime:      help [command]
 
 Type 'help' for the full command list!
 """

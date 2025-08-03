@@ -154,7 +154,7 @@ class Converter:
 
         # Handle string methods
         for method, replacement in self.language_patterns['js_to_python']['string_methods'].items():
-            result = re.sub(r'\.' + method + '\(', '.' + replacement + '(', result)
+            result = re.sub(r'\.' + method + '(', '.' + replacement + '(', result)
 
         # Handle undefined and null
         for js_val, py_val in self.language_patterns['js_to_python']['undefined_null'].items():

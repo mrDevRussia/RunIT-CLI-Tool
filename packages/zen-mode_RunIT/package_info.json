@@ -1,15 +1,16 @@
 {
   "name": "zen-mode_RunIT",
   "version": "1.0.0",
-  "description": "A minimal, focused coding interface:
-
-  Displays one line of code at a time
-
-  Shows a calming or motivational phrase
-
-  Designed for deep work and mental clarity
-",
-  "commands": [
-    "zmode"
-  ]
+  "description": "A minimal, focused coding interface that displays one line of code at a time with calming phrases for deep work and mental clarity",
+  "author": "RunIT Team",
+  "main_file": "zen_mode.py",
+  "dependencies": [],
+  "commands": {
+    "zen": {
+      "description": "Enter zen mode for focused coding",
+      "usage": "zen <file_path>"
+    }
+  },
+  "minimum_runit_version": "1.2.0",
+  "license": "MIT"
 }

@@ -4,7 +4,7 @@ File Manager for RunIT CLI Tool
 Handles file operations like show, edit, and directory navigation.
 
 Author: RunIT Development Team
-Version: 1.1.0
+Version: 1.2.0
 License: MIT
 """
 

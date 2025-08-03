@@ -1,0 +1,36 @@
+{
+  "packages": {
+    "preview_RunIT@latest": {
+      "name": "preview_RunIT",
+      "version": "1.0.0",
+      "description": "Preview HTML files in the browser",
+      "main_file": "preview.py",
+      "dependencies": [],
+      "installed": false,
+      "install_path": null
+    },
+    "Edit_RunIT@latest": {
+      "name": "Edit_RunIT",
+      "version": "1.0.0",
+      "description": "Advanced file editing capabilities",
+      "main_file": "editor.py",
+      "dependencies": [],
+      "installed": false,
+      "install_path": null
+    },
+    "zen-mode_RunIT@latest": {
+      "name": "zen-mode_RunIT",
+      "version": "1.0.0",
+      "description": "A minimal, focused coding interface that displays one line of code at a time with calming phrases",
+      "main_file": "zen_mode.py",
+      "dependencies": [],
+      "installed": true,
+      "install_path": "packages/zen-mode_RunIT"
+    }
+  },
+  "core_tool": {
+    "name": "RunIT",
+    "version": "1.2.0",
+    "last_updated": "2025-08-02 00:03:09"
+  }
+}

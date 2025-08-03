@@ -1,0 +1,16 @@
+{
+    "name": "your_package_name",
+    "version": "1.0.0",
+    "description": "Example RunIT package template",
+    "author": "Your Name",
+    "main_file": "your_package_name.py",
+    "dependencies": [],
+    "commands": {
+        "example": {
+            "description": "Example command description",
+            "usage": "example <argument>"
+        }
+    },
+    "minimum_runit_version": "1.2.0",
+    "license": "MIT"
+}

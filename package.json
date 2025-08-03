@@ -1,6 +1,6 @@
 {
   "name": "runit-cli-tool",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "RunIT CLI Tool",
   "dependencies": {
     "localtunnel": "^2.0.2"

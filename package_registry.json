@@ -6,22 +6,31 @@
       "description": "Preview HTML files in the browser",
       "main_file": "preview.py",
       "dependencies": [],
-      "installed": false,
-      "install_path": null
+      "installed": true,
+      "install_path": "packages/preview_RunIT"
     },
-    "Edit_RunIT@latest": {
-      "name": "Edit_RunIT",
+    "zen-mode_RunIT@latest": {
+      "name": "zen-mode_RunIT",
       "version": "1.0.0",
-      "description": "Advanced file editing capabilities",
-      "main_file": "editor.py",
+      "description": "A minimal, focused coding interface that displays one line of code at a time.",
+      "main_file": "zen_mode.py",
       "dependencies": [],
-      "installed": false,
-      "install_path": null
+      "installed": true,
+      "install_path": "packages/zen-mode_RunIT"
+    },
+    "iloveneans_RunIT@latest": {
+      "name": "ilovebeans_RunIT",
+      "version": "1.0.0",
+      "description": "just shows one word.",
+      "main_file": "ilovebeans.py",
+      "dependencies": [],
+      "installed": true,
+      "install_path": "packages/ilovebeans_RunIT"
     }
   },
   "core_tool": {
     "name": "RunIT",
-    "version": "1.1.0",
-    "last_updated": "2025-08-01 00:11:45"
+    "version": "1.2.0",
+    "last_updated": "2025-08-02 00:03:09"
   }
 }

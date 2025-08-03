@@ -4,7 +4,7 @@ Package Manager for RunIT CLI Tool
 Handles package installation, updates, and management.
 
 Author: RunIT Development Team
-Version: 1.1.0
+Version: 1.2.0
 License: MIT
 """
 
@@ -16,6 +16,7 @@ import urllib.error
 import zipfile
 import tempfile
 import socket
+import subprocess
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 from utils.logger import Logger
@@ -32,7 +33,7 @@ class PackageManager:
         """Initialize the Package Manager."""
         self.logger = Logger()
         self.file_utils = FileUtils()
-        self.current_version = "1.1.0"
+        self.current_version = "1.2.0"
         
         # Package directories
         self.packages_dir = Path("packages")
@@ -49,29 +50,129 @@ class PackageManager:
         # Initialize config if it doesn't exist
         if not self.config_file.exists():
             self._init_config()
+            
+        # Load registry and config
+        self.registry = self._load_registry()
+        self.config = self._load_config()
+        
+    def _load_registry(self) -> dict:
+        """Load the package registry."""
+        with open(self.registry_file) as f:
+            return json.load(f)
+            
+    def _load_config(self) -> dict:
+        """Load the package configuration."""
+        with open(self.config_file) as f:
+            return json.load(f)
+            
+    def get_installed_packages(self) -> Dict[str, dict]:
+        """Get all installed packages from the registry.
+        
+        Returns:
+            Dict[str, dict]: Dictionary of installed packages and their information
+        """
+        return {name: info for name, info in self.registry["packages"].items()}
+
+    def install_package(self, package_name: str) -> bool:
+        """Install a package from its GitHub repository.
+        
+        Args:
+            package_name: Name of the package to install
+            
+        Returns:
+            bool: True if installation was successful, False otherwise
+        """
+        try:
+            # Check if package exists in registry
+            if package_name not in self.registry["packages"]:
+                self.logger.error(f"Package {package_name} not found in registry")
+                return False
+                
+            package_info = self.registry["packages"][package_name]
+            repo_url = package_info["repository"]
+            
+            # Create package directory
+            package_dir = self.packages_dir / package_name
+            package_dir.mkdir(exist_ok=True)
+            
+            # Clone the repository
+            try:
+                subprocess.run(
+                    ["git", "clone", repo_url, str(package_dir)],
+                    check=True,
+                    capture_output=True,
+                    text=True
+                )
+            except subprocess.CalledProcessError as e:
+                self.logger.error(f"Failed to clone repository: {e.stderr}")
+                return False
+                
+            # Verify package configuration
+            package_config = package_dir / "package_info.json"
+            if not package_config.exists():
+                self.logger.error(f"Package {package_name} is missing package_info.json")
+                shutil.rmtree(package_dir)
+                return False
+                
+            # Load and validate package configuration
+            with open(package_config) as f:
+                config = json.load(f)
+                
+            required_fields = ["name", "version", "main_file", "dependencies"]
+            if not all(field in config for field in required_fields):
+                self.logger.error(f"Package {package_name} has invalid package_info.json")
+                shutil.rmtree(package_dir)
+                return False
+                
+            # Update registry
+            self.registry["packages"][package_name]["installed"] = True
+            self.registry["packages"][package_name]["install_path"] = str(package_dir)
+            self.registry["packages"][package_name]["version"] = config["version"]
+            
+            with open(self.registry_file, "w") as f:
+                json.dump(self.registry, f, indent=2)
+                
+            # Update config
+            self.config["installed_packages"].append(package_name)
+            self.config["package_paths"][package_name] = str(package_dir)
+            
+            with open(self.config_file, "w") as f:
+                json.dump(self.config, f, indent=2)
+                
+            self.logger.info(f"Successfully installed package {package_name}")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Failed to install package {package_name}: {str(e)}")
+            return False
 
     def _init_registry(self):
         """Initialize the package registry with built-in packages."""
         registry = {
             "packages": {
-                "preview_RunIT@latest": {
+                "preview_RunIT": {
                     "name": "preview_RunIT",
                     "version": "1.0.0",
                     "description": "Preview HTML files in the browser",
+                    "repository": "https://github.com/runit-packages/preview-runit",
                     "main_file": "preview.py",
                     "dependencies": [],
                     "installed": False,
                     "install_path": None
                 },
-                "Edit_RunIT@latest": {
+
+                "Edit_RunIT": {
                     "name": "Edit_RunIT",
                     "version": "1.0.0",
                     "description": "Advanced file editing capabilities",
+                    "repository": "https://github.com/runit-packages/edit-runit",
                     "main_file": "editor.py",
                     "dependencies": [],
                     "installed": False,
                     "install_path": None
                 }
+            
+
             },
             "core_tool": {
                 "name": "RunIT",
@@ -91,7 +192,8 @@ class PackageManager:
             "auto_update": False,
             "registry_url": "https://github.com/runit-packages/registry",
             "installed_packages": [],
-            "package_paths": {}
+            "package_paths": {},
+            "github_token": None  # Optional: For private repositories
         }
         
         with open(self.config_file, 'w') as f:
@@ -135,59 +237,123 @@ class PackageManager:
 
     def install_package(self, package_name: str) -> bool:
         """
-        Install a package.
+        Install a package from GitHub releases.
         
         Args:
-            package_name (str): Name of the package to install (e.g., 'preview_RunIT@latest')
+            package_name (str): Name of the package to install (e.g., 'zen-mode_RunIT@latest')
             
         Returns:
             bool: True if installation successful, False otherwise
         """
-        registry = self._load_registry()
-        config = self._load_config()
-        
-        if package_name not in registry["packages"]:
-            print(f"❌ Package '{package_name}' not found in registry")
-            self.logger.error(f"Package not found: {package_name}")
-            return False
-        
-        package_info = registry["packages"][package_name]
-        
-        if package_info["installed"]:
-            print(f"📦 Package '{package_name}' is already installed")
-            print(f"   Version: {package_info['version']}")
-            return True
-        
-        print(f"📦 Installing package: {package_name}")
-        print(f"   Description: {package_info['description']}")
-        
         try:
-            # Create package directory
-            package_dir = self.packages_dir / package_info["name"]
-            package_dir.mkdir(exist_ok=True)
-            
-            # Install based on package type
-            success = self._install_package_files(package_name, package_info, package_dir)
-            
-            if success:
-                # Update registry
-                registry["packages"][package_name]["installed"] = True
-                registry["packages"][package_name]["install_path"] = str(package_dir)
-                self._save_registry(registry)
-                
-                # Update config
-                if package_name not in config["installed_packages"]:
-                    config["installed_packages"].append(package_name)
-                config["package_paths"][package_name] = str(package_dir)
-                self._save_config(config)
-                
-                print(f"✅ Package '{package_name}' installed successfully!")
-                self.logger.info(f"Package installed: {package_name}")
-                return True
-            else:
-                print(f"❌ Failed to install package '{package_name}'")
+            # Parse package name and version
+            if '@' not in package_name:
+                print("❌ Invalid package format. Use: package_name@version (e.g., zen-mode_RunIT@latest)")
                 return False
                 
+            name, version = package_name.split('@')
+            
+            # Get GitHub release
+            github_url = f"https://api.github.com/repos/runit-packages/{name}/releases"
+            
+            try:
+                with urllib.request.urlopen(github_url) as response:
+                    releases = json.loads(response.read())
+            except urllib.error.URLError as e:
+                print(f"❌ Failed to fetch releases: {e}")
+                return False
+                
+            if not releases:
+                print(f"❌ No releases found for package {name}")
+                return False
+                
+            # Get latest or specific version
+            release = releases[0] if version == 'latest' else next(
+                (r for r in releases if r['tag_name'] == version),
+                None
+            )
+            
+            if not release:
+                print(f"❌ Version {version} not found for package {name}")
+                return False
+                
+            # Download release assets
+            assets_url = release['assets_url']
+            try:
+                with urllib.request.urlopen(assets_url) as response:
+                    assets = json.loads(response.read())
+            except urllib.error.URLError as e:
+                print(f"❌ Failed to fetch release assets: {e}")
+                return False
+                
+            if not assets:
+                print(f"❌ No assets found in release {version}")
+                return False
+                
+            # Create package directory
+            package_dir = self.packages_dir / name
+            package_dir.mkdir(exist_ok=True)
+            
+            # Download and extract package
+            for asset in assets:
+                if asset['name'].endswith('.zip'):
+                    try:
+                        # Download zip file
+                        with urllib.request.urlopen(asset['browser_download_url']) as response:
+                            with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+                                shutil.copyfileobj(response, tmp_file)
+                                
+                        # Extract zip file
+                        with zipfile.ZipFile(tmp_file.name, 'r') as zip_ref:
+                            zip_ref.extractall(package_dir)
+                            
+                        # Cleanup
+                        os.unlink(tmp_file.name)
+                        
+                        # Verify package structure
+                        if not (package_dir / 'package_info.json').exists():
+                            print("❌ Invalid package: missing package_info.json")
+                            shutil.rmtree(package_dir)
+                            return False
+                            
+                        # Update registry
+                        registry = self._load_registry()
+                        if name not in registry['packages']:
+                            registry['packages'][name] = {
+                                'name': name,
+                                'version': release['tag_name'],
+                                'description': release['body'] or 'No description available',
+                                'repository': f"https://github.com/runit-packages/{name}",
+                                'installed': True,
+                                'install_path': str(package_dir)
+                            }
+                        else:
+                            registry['packages'][name].update({
+                                'version': release['tag_name'],
+                                'installed': True,
+                                'install_path': str(package_dir)
+                            })
+                        self._save_registry(registry)
+                        
+                        # Update config
+                        config = self._load_config()
+                        if name not in config['installed_packages']:
+                            config['installed_packages'].append(name)
+                        config['package_paths'][name] = str(package_dir)
+                        self._save_config(config)
+                        
+                        print(f"✅ Successfully installed {name} version {release['tag_name']}")
+                        return True
+                        
+                    except Exception as e:
+                        print(f"❌ Failed to install package: {e}")
+                        if package_dir.exists():
+                            shutil.rmtree(package_dir)
+                        return False
+                        
+            print("❌ No valid package archive found in release")
+            return False
+            
         except Exception as e:
             print(f"❌ Installation failed: {e}")
             self.logger.error(f"Package installation failed: {e}")
@@ -288,8 +454,7 @@ def main(args):
                 "version": "1.0.0",
                 "description": "Preview HTML files in browser",
                 "commands": ["preview"]
-            }
-            
+            }	
             with open(package_dir / "package_info.json", 'w') as f:
                 json.dump(info, f, indent=2)
             
