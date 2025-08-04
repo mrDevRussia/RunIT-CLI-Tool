@@ -1,34 +1,34 @@
 {
   "sources": [
     {
-      "name": "preview_RunIT",
-      "repository": "https://github.com/mrDevRussia/preview_RunIT",
-      "install_command": "runit install preview_RunIT@latest",
+      "name": "preview_RunIT-Package",
+      "repository": "https://github.com/mrDevRussia/preview_RunIT-Package",
+      "install_command": "install preview_RunIT@latest",
       "description": "Preview functionality for RunIT",
       "author": "mrDevRussia",
       "tags": ["preview", "utility"],
       "verified": true,
-      "last_updated": "2024-02-05"
+      "last_updated": "2025-02-08"
     },
     {
-      "name": "zen-mode_RunIT",
-      "repository": "https://github.com/mrDevRussia/zen-mode_RunIT",
-      "install_command": "runit install zen-mode_RunIT@latest",
+      "name": "zen-mode_RunIT-Package",
+      "repository": "https://github.com/mrDevRussia/zen-mode_RunIT-Package",
+      "install_command": "install zen-mode_RunIT@latest",
       "description": "Zen mode for RunIT interface",
       "author": "mrDevRussia",
       "tags": ["interface", "utility"],
       "verified": true,
-      "last_updated": "2024-02-05"
+      "last_updated": "2025-02-08"
     },
     {
       "name": "ilovebeans_RunIT",
       "repository": "https://github.com/mrDevRussia/RunIT-ilovebeans_RunIT-latest",
-      "install_command": "runit install ilovebeans_RunIT@latest",
+      "install_command": "install ilovebeans_RunIT@latest",
       "description": "ILoveBeans package for RunIT",
       "author": "mrDevRussia",
       "tags": ["utility"],
       "verified": true,
-      "last_updated": "2024-02-05"
+      "last_updated": "2025-02-08"
     }
   ]
 }
