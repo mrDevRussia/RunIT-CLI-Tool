@@ -15,10 +15,12 @@
   },
   "installed_packages": [
     "preview_RunIT@latest",
-    "zen-mode_RunIT@latest"
+    "zen-mode_RunIT@latest",
+    "ilovebeans_RunIT"
   ],
   "package_paths": {
     "preview_RunIT@latest": "packages/preview_RunIT",
-    "zen-mode_RunIT@latest": "packages/zen-mode_RunIT"
+    "zen-mode_RunIT@latest": "packages/zen-mode_RunIT",
+    "ilovebeans_RunIT": "packages\\ilovebeans_RunIT"
   }
 }

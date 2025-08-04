@@ -1,0 +1,19 @@
+{
+  "sources": [
+    {
+      "name": "preview_RunIT",
+      "repository": "https://github.com/mrDevRussia/preview_RunIT",
+      "install_command": "runit install preview_RunIT@latest"
+    },
+    {
+      "name": "zen-mode_RunIT",
+      "repository": "https://github.com/mrDevRussia/zen-mode_RunIT",
+      "install_command": "runit install zen-mode_RunIT@latest"
+    },
+    {
+      "name": "ilovebeans_RunIT",
+      "repository": "https://github.com/mrDevRussia/RunIT-ilovebeans_RunIT-latest",
+      "install_command": "install ilovebeans_RunIT@latest"
+    }
+  ]
+}

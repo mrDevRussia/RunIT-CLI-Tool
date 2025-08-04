@@ -26,6 +26,14 @@
       "dependencies": [],
       "installed": true,
       "install_path": "packages/ilovebeans_RunIT"
+    },
+    "ilovebeans_RunIT": {
+      "name": "ilovebeans_RunIT",
+      "version": "ilovebeans_RunIT@latest",
+      "description": "No description available",
+      "repository": "https://github.com/mrDevRussia/RunIT-ilovebeans_RunIT-latest",
+      "installed": true,
+      "install_path": "packages\\ilovebeans_RunIT"
     }
   },
   "core_tool": {

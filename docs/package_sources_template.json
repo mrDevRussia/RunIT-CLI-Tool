@@ -1,0 +1,24 @@
+{
+  "sources": [
+    {
+      "name": "example-package_RunIT",
+      "repository": "https://github.com/username/example-package_RunIT",
+      "install_command": "runit install example-package_RunIT@latest",
+      "description": "Example package description",
+      "author": "Package Author",
+      "tags": ["utility", "tool"],
+      "verified": false,
+      "last_updated": "YYYY-MM-DD"
+    }
+  ],
+  "_comments": {
+    "name": "Package name must end with _RunIT suffix",
+    "repository": "GitHub repository URL for the package",
+    "install_command": "Command to install the package (must use runit prefix)",
+    "description": "Brief description of the package functionality",
+    "author": "Package maintainer or organization",
+    "tags": "Categories or keywords for the package",
+    "verified": "Whether the package is verified by RunIT maintainers",
+    "last_updated": "Date of last package update (YYYY-MM-DD format)"
+  }
+}

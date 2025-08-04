@@ -17,6 +17,7 @@ import zipfile
 import tempfile
 import socket
 import subprocess
+import requests
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 from utils.logger import Logger
@@ -39,6 +40,7 @@ class PackageManager:
         self.packages_dir = Path("packages")
         self.registry_file = Path("package_registry.json")
         self.config_file = Path("package_config.json")
+        self.sources_file = Path("package_sources.json")
         
         # Ensure directories exist
         self.packages_dir.mkdir(exist_ok=True)
@@ -50,10 +52,15 @@ class PackageManager:
         # Initialize config if it doesn't exist
         if not self.config_file.exists():
             self._init_config()
+
+        # Initialize sources if it doesn't exist
+        if not self.sources_file.exists():
+            self._init_sources()
             
-        # Load registry and config
+        # Load registry, config, and sources
         self.registry = self._load_registry()
         self.config = self._load_config()
+        self.sources = self._load_sources()
         
     def _load_registry(self) -> dict:
         """Load the package registry."""
@@ -65,6 +72,19 @@ class PackageManager:
         with open(self.config_file) as f:
             return json.load(f)
             
+    def _load_sources(self) -> dict:
+        """Load the package sources configuration."""
+        with open(self.sources_file) as f:
+            return json.load(f)
+            
+    def _init_sources(self):
+        """Initialize the package sources configuration file."""
+        initial_sources = {
+            "sources": []
+        }
+        with open(self.sources_file, 'w') as f:
+            json.dump(initial_sources, f, indent=2)
+            
     def get_installed_packages(self) -> Dict[str, dict]:
         """Get all installed packages from the registry.
         
@@ -72,6 +92,78 @@ class PackageManager:
             Dict[str, dict]: Dictionary of installed packages and their information
         """
         return {name: info for name, info in self.registry["packages"].items()}
+        
+    def add_package_source(self, name: str, repository: str, install_command: str) -> bool:
+        """Add a new package source to the configuration.
+        
+        Args:
+            name: Name of the package
+            repository: GitHub repository URL
+            install_command: Command to install the package
+            
+        Returns:
+            bool: True if successful, False otherwise
+        """
+        try:
+            # Validate repository URL format
+            if not repository.startswith('https://github.com/'):
+                print("❌ Repository URL must be a GitHub repository")
+                return False
+                
+            # Check if package already exists
+            if any(source['name'] == name for source in self.sources['sources']):
+                print(f"❌ Package {name} already exists in sources")
+                return False
+                
+            # Add new source
+            self.sources['sources'].append({
+                'name': name,
+                'repository': repository,
+                'install_command': install_command
+            })
+            
+            # Save sources
+            with open(self.sources_file, 'w') as f:
+                json.dump(self.sources, f, indent=2)
+                
+            print(f"✅ Added package source: {name}")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Failed to add package source: {e}")
+            return False
+            
+    def remove_package_source(self, name: str) -> bool:
+        """Remove a package source from the configuration.
+        
+        Args:
+            name: Name of the package to remove
+            
+        Returns:
+            bool: True if successful, False otherwise
+        """
+        try:
+            # Find and remove package
+            self.sources['sources'] = [s for s in self.sources['sources'] if s['name'] != name]
+            
+            # Save sources
+            with open(self.sources_file, 'w') as f:
+                json.dump(self.sources, f, indent=2)
+                
+            print(f"✅ Removed package source: {name}")
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Failed to remove package source: {e}")
+            return False
+            
+    def list_package_sources(self) -> List[Dict[str, str]]:
+        """List all available package sources.
+        
+        Returns:
+            List[Dict[str, str]]: List of package sources
+        """
+        return self.sources['sources']
 
     def install_package(self, package_name: str) -> bool:
         """Install a package from its GitHub repository.
@@ -83,29 +175,88 @@ class PackageManager:
             bool: True if installation was successful, False otherwise
         """
         try:
-            # Check if package exists in registry
-            if package_name not in self.registry["packages"]:
-                self.logger.error(f"Package {package_name} not found in registry")
+            # Find package in sources
+            package_source = next((s for s in self.sources['sources'] if s['name'] == package_name.replace('@latest', '')), None)
+            if not package_source:
+                self.logger.error(f"Package {package_name} not found in sources")
                 return False
-                
-            package_info = self.registry["packages"][package_name]
-            repo_url = package_info["repository"]
-            
-            # Create package directory
-            package_dir = self.packages_dir / package_name
-            package_dir.mkdir(exist_ok=True)
-            
-            # Clone the repository
-            try:
-                subprocess.run(
-                    ["git", "clone", repo_url, str(package_dir)],
-                    check=True,
-                    capture_output=True,
-                    text=True
-                )
-            except subprocess.CalledProcessError as e:
-                self.logger.error(f"Failed to clone repository: {e.stderr}")
-                return False
+
+            # Create temporary directory for download
+            with tempfile.TemporaryDirectory() as temp_dir:
+                temp_path = Path(temp_dir)
+                zip_path = temp_path / f"{package_name}.zip"
+
+                # Try to download from latest release first
+                repo_name = package_source['repository'].replace('https://github.com/', '')
+                releases_url = f"https://api.github.com/repos/{repo_name}/releases/latest"
+                try:
+                    print(f"📦 Downloading {package_name}...")
+                    releases_response = requests.get(releases_url)
+                    
+                    if releases_response.status_code == 200:
+                        release_data = releases_response.json()
+                        if release_data.get('zipball_url'):
+                            response = requests.get(release_data['zipball_url'])
+                        else:
+                            print("❌ No release assets found, falling back to main branch...")
+                            response = requests.get(f"{package_source['repository']}/archive/refs/heads/main.zip")
+                    else:
+                        print("❌ No releases found, falling back to main branch...")
+                        response = requests.get(f"{package_source['repository']}/archive/refs/heads/main.zip")
+                    
+                    response.raise_for_status()
+                    
+                    with open(zip_path, 'wb') as f:
+                        f.write(response.content)
+                except Exception as e:
+                    self.logger.error(f"Failed to download package: {e}")
+                    return False
+
+                # Extract package
+                try:
+                    print(f"📦 Extracting {package_name}...")
+                    with zipfile.ZipFile(zip_path) as zf:
+                        zf.extractall(temp_path)
+                    
+                    # Find extracted folder (could be from release or main branch)
+                    extracted_dirs = list(temp_path.glob('*'))
+                    extracted_dir = next(d for d in extracted_dirs if d.is_dir() and d != temp_path)
+                    
+                    # Create package directory
+                    package_dir = self.packages_dir / package_name.replace('@latest', '')
+                    if package_dir.exists():
+                        shutil.rmtree(package_dir)
+                    
+                    # Move files to package directory
+                    shutil.copytree(extracted_dir, package_dir)
+                    
+                    # Update registry
+                    with open(package_dir / 'package_info.json') as f:
+                        pkg_info = json.load(f)
+                        
+                    self.registry['packages'][package_name] = {
+                        'name': pkg_info['name'],
+                        'version': pkg_info['version'],
+                        'description': pkg_info.get('description', ''),
+                        'main_file': pkg_info.get('main_file', f"{pkg_info['name']}.py"),
+                        'dependencies': pkg_info.get('dependencies', []),
+                        'installed': True,
+                        'install_path': f"packages/{package_name.replace('@latest', '')}"
+                    }
+                    
+                    with open(self.registry_file, 'w') as f:
+                        json.dump(self.registry, f, indent=2)
+                        
+                    print(f"✅ Successfully installed {package_name}")
+                    return True
+                        
+                except Exception as e:
+                    self.logger.error(f"Failed to extract package: {e}")
+                    return False
+                    
+        except Exception as e:
+            self.logger.error(f"Failed to install package: {e}")
+            return False
                 
             # Verify package configuration
             package_config = package_dir / "package_info.json"
@@ -253,8 +404,23 @@ class PackageManager:
                 
             name, version = package_name.split('@')
             
+            # Find package in sources
+            package_source = next(
+                (source for source in self.sources['sources'] if source['name'] == name),
+                None
+            )
+            
+            if not package_source:
+                print(f"❌ Package {name} not found in package sources")
+                return False
+                
+            # Extract owner and repo from repository URL
+            # Example: https://github.com/owner/repo -> owner/repo
+            repo_parts = package_source['repository'].split('github.com/')[1].split('/')
+            owner, repo = repo_parts[0], repo_parts[1]
+            
             # Get GitHub release
-            github_url = f"https://api.github.com/repos/runit-packages/{name}/releases"
+            github_url = f"https://api.github.com/repos/{owner}/{repo}/releases"
             
             try:
                 with urllib.request.urlopen(github_url) as response:
@@ -287,8 +453,80 @@ class PackageManager:
                 return False
                 
             if not assets:
-                print(f"❌ No assets found in release {version}")
-                return False
+                # No assets found, try using zipball_url
+                try:
+                    # Create package directory
+                    package_dir = self.packages_dir / name
+                    package_dir.mkdir(exist_ok=True)
+                    
+                    # Download zipball
+                    with urllib.request.urlopen(release['zipball_url']) as response:
+                        with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+                            shutil.copyfileobj(response, tmp_file)
+                    
+                    # Extract zipball to temp directory first
+                    temp_extract_dir = tempfile.mkdtemp()
+                    with zipfile.ZipFile(tmp_file.name, 'r') as zip_ref:
+                        zip_ref.extractall(temp_extract_dir)
+                    
+                    # Find the root directory (GitHub creates a single root dir)
+                    root_dir = next(Path(temp_extract_dir).iterdir())
+                    
+                    # Check if package files are in a subdirectory with the package name
+                    package_subdir = root_dir / name
+                    if package_subdir.exists() and package_subdir.is_dir():
+                        # Move contents from the package subdirectory
+                        for item in package_subdir.iterdir():
+                            shutil.move(str(item), str(package_dir / item.name))
+                    else:
+                        # Move contents from root directory
+                        for item in root_dir.iterdir():
+                            shutil.move(str(item), str(package_dir / item.name))
+                    
+                    # Cleanup
+                    os.unlink(tmp_file.name)
+                    shutil.rmtree(temp_extract_dir)
+                    
+                    # Verify package structure
+                    if not (package_dir / 'package_info.json').exists():
+                        print("❌ Invalid package: missing package_info.json")
+                        shutil.rmtree(package_dir)
+                        return False
+                    
+                    # Update registry
+                    registry = self._load_registry()
+                    if name not in registry['packages']:
+                        registry['packages'][name] = {
+                            'name': name,
+                            'version': release['tag_name'],
+                            'description': release['body'] or 'No description available',
+                            'repository': package_source['repository'],
+                            'installed': True,
+                            'install_path': str(package_dir)
+                        }
+                    else:
+                        registry['packages'][name].update({
+                            'version': release['tag_name'],
+                            'installed': True,
+                            'install_path': str(package_dir)
+                        })
+                    self._save_registry(registry)
+                    
+                    # Update config
+                    config = self._load_config()
+                    if name not in config['installed_packages']:
+                        config['installed_packages'].append(name)
+                    config['package_paths'][name] = str(package_dir)
+                    self._save_config(config)
+                    
+                    print(f"✅ Successfully installed {name} version {release['tag_name']} using zipball")
+                    return True
+                    
+                except Exception as e:
+                    print(f"❌ Failed to install package using zipball: {e}")
+                    if package_dir.exists():
+                        shutil.rmtree(package_dir)
+                    return False
                 
             # Create package directory
             package_dir = self.packages_dir / name
@@ -303,12 +541,21 @@ class PackageManager:
                             with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
                                 shutil.copyfileobj(response, tmp_file)
                                 
-                        # Extract zip file
+                        # Extract zip file to temp directory first
+                        temp_extract_dir = tempfile.mkdtemp()
                         with zipfile.ZipFile(tmp_file.name, 'r') as zip_ref:
-                            zip_ref.extractall(package_dir)
-                            
+                            zip_ref.extractall(temp_extract_dir)
+                        
+                        # Find the root directory (GitHub creates a single root dir)
+                        root_dir = next(Path(temp_extract_dir).iterdir())
+                        
+                        # Move contents to package directory
+                        for item in root_dir.iterdir():
+                            shutil.move(str(item), str(package_dir / item.name))
+                        
                         # Cleanup
                         os.unlink(tmp_file.name)
+                        shutil.rmtree(temp_extract_dir)
                         
                         # Verify package structure
                         if not (package_dir / 'package_info.json').exists():
@@ -792,6 +1039,7 @@ def main(args):
                 "utils/",
                 "docs/",
                 "package_registry.json",
+                "package_sources.json",
                 "package_config.json"
             ]
             
@@ -826,6 +1074,7 @@ def main(args):
                 "docs/",
                 "package_registry.json",
                 "package_config.json",
+                "package_sources.json",
                 "utils/"
             ]
             

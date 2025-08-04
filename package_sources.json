@@ -1,0 +1,34 @@
+{
+  "sources": [
+    {
+      "name": "preview_RunIT",
+      "repository": "https://github.com/mrDevRussia/preview_RunIT",
+      "install_command": "runit install preview_RunIT@latest",
+      "description": "Preview functionality for RunIT",
+      "author": "mrDevRussia",
+      "tags": ["preview", "utility"],
+      "verified": true,
+      "last_updated": "2024-02-05"
+    },
+    {
+      "name": "zen-mode_RunIT",
+      "repository": "https://github.com/mrDevRussia/zen-mode_RunIT",
+      "install_command": "runit install zen-mode_RunIT@latest",
+      "description": "Zen mode for RunIT interface",
+      "author": "mrDevRussia",
+      "tags": ["interface", "utility"],
+      "verified": true,
+      "last_updated": "2024-02-05"
+    },
+    {
+      "name": "ilovebeans_RunIT",
+      "repository": "https://github.com/mrDevRussia/RunIT-ilovebeans_RunIT-latest",
+      "install_command": "runit install ilovebeans_RunIT@latest",
+      "description": "ILoveBeans package for RunIT",
+      "author": "mrDevRussia",
+      "tags": ["utility"],
+      "verified": true,
+      "last_updated": "2024-02-05"
+    }
+  ]
+}
