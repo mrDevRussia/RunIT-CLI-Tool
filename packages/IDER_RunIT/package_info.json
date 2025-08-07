@@ -1,0 +1,16 @@
+{
+  "name": "IDER_RunIT",
+  "version": "1.0.0",
+  "description": "Integrated Development Environment for RunIT with a professional CLI interface",
+  "author": "RunIT Team",
+  "main_file": "ider.py",
+  "dependencies": ["colorama", "prompt_toolkit"],
+  "commands": {
+    "adm": {
+      "description": "Advanced Developer Mode - Access a specialized CLI interface for development",
+      "usage": "adm [directory]"
+    }
+  },
+  "minimum_runit_version": "1.3.0",
+  "license": "MIT"
+}

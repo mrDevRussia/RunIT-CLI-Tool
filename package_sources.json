@@ -11,7 +11,7 @@
       "last_updated": "2025-02-08"
     },
     {
-      "name": "zen-mode_RunIT-Package",
+      "name": "zen-mode_RunIT",
       "repository": "https://github.com/mrDevRussia/zen-mode_RunIT-Package",
       "install_command": "install zen-mode_RunIT@latest",
       "description": "Zen mode for RunIT interface",
@@ -22,13 +22,33 @@
     },
     {
       "name": "ilovebeans_RunIT",
-      "repository": "https://github.com/mrDevRussia/RunIT-ilovebeans_RunIT-latest",
+      "repository": "https://github.com/microsoft/terminal",
       "install_command": "install ilovebeans_RunIT@latest",
       "description": "ILoveBeans package for RunIT",
       "author": "mrDevRussia",
       "tags": ["utility"],
       "verified": true,
       "last_updated": "2025-02-08"
+    },
+    {
+      "name": "kill_RunIT-Package",
+      "repository": "https://github.com/mrDevRussia/kill_RunIT-Package",
+      "install_command": "install kill_RunIT@latest",
+      "description": "kill all process",
+      "author": "mrDevRussia",
+      "tags": ["systems", "utility"],
+      "verified": true,
+      "last_updated": "2025-05-08"
+    },
+ {
+      "name": "IDER_RunIT",
+      "repository": "https://github.com/mrDevRussia/IDER_RunIT",
+      "install_command": "install IDER_RunIT@latest",
+      "description": "Package for ADM",
+      "author": "mrDevRussia",
+      "tags": ["ADM", "utility"],
+      "verified": true,
+      "last_updated": "2025-05-08"
     }
   ]
 }

@@ -4,7 +4,7 @@ RunIT - Smart Terminal Assistant for Windows
 A professional CLI tool for running, creating, and analyzing code files.
 
 Author: RunIT Development Team
-Version: 1.2.0
+Version: 1.3.0
 License: MIT
 """
 
@@ -81,6 +81,11 @@ class RunITCLI:
             'share': self.cmd_share,
             'setport': lambda args: self.deployer.set_port(int(args[0])) if args and args[0].isdigit() else print("❌ Please provide a valid port number (e.g. 'setport 8080')"),
             'convert': self.cmd_convert,
+            # New v1.3.0 commands
+            'restart': self.cmd_restart,
+            'uninstall': self.cmd_uninstall,
+            'adm': self.cmd_adm,
+            'kill': self.cmd_kill,
         }
         
         # Load package commands
@@ -166,7 +171,8 @@ class RunITCLI:
             self.logger.error("Invalid arguments for convert command")
             print("❌ Usage: convert <source_file> <target_language>")
             print("Supported conversions:")
-            for source, target in self.converter.get_supported_conversions():
+            for conversion, details in self.converter.get_supported_conversions().items():
+                source, target = details
                 print(f"  • {source} → {target}")
             return
 
@@ -205,7 +211,7 @@ class RunITCLI:
         """Display the RunIT welcome banner."""
         banner = """
 ╔══════════════════════════════════════════════════════════════╗
-║                         RunIT v1.2.0                         ║
+║                         RunIT v1.3.0                         ║
 ║              Smart Terminal Assistant for Windows            ║
 ║                Your assistant between your hands             ║
 ╠══════════════════════════════════════════════════════════════╣
@@ -469,6 +475,116 @@ class RunITCLI:
             print("❌ Preview package not installed or not working")
             print("   Install it with: install preview_RunIT@latest")
             self.logger.error(f"Preview command failed: {e}")
+            
+    def cmd_restart(self, args):
+        """Restart the RunIT tool."""
+        self.logger.info("Restarting RunIT...")
+        print("🔄 Restarting RunIT...")
+        
+        # Get the current executable path
+        if getattr(sys, 'frozen', False):
+            # Running as compiled executable
+            executable = sys.executable
+        else:
+            # Running as script
+            executable = sys.executable
+            script = os.path.abspath(__file__)
+        
+        # Close current instance
+        self.running = False
+        
+        # Start new process using subprocess instead of os.execl to handle paths with spaces
+        try:
+            import subprocess
+            if getattr(sys, 'frozen', False):
+                subprocess.Popen([executable] + sys.argv)
+            else:
+                subprocess.Popen([executable, script] + sys.argv[1:])
+            # Exit the current process
+            sys.exit(0)
+        except Exception as e:
+            self.logger.error(f"Failed to restart: {str(e)}")
+            print(f"❌ Failed to restart: {str(e)}")
+            # Restart running to keep current instance alive
+            self.running = True
+            return False
+        
+        return True
+    
+    def cmd_uninstall(self, args):
+        """Uninstall the RunIT tool."""
+        self.logger.info("Uninstalling RunIT...")
+        print("⚠️ Are you sure you want to uninstall RunIT? This will remove all files and settings.")
+        print("   Type 'yes' to confirm or anything else to cancel:")
+        
+        confirmation = input("> ").strip().lower()
+        if confirmation != "yes":
+            print("✅ Uninstallation cancelled.")
+            return False
+        
+        print("🗑️ Uninstalling RunIT...")
+        
+        # Get the installation directory (parent of current file)
+        install_dir = os.path.dirname(os.path.abspath(__file__))
+        
+        # Create uninstall script
+        try:
+            # Create a batch file to delete the installation directory after this process exits
+            uninstall_script = os.path.join(os.environ.get('TEMP', '.'), 'uninstall_runit.bat')
+            with open(uninstall_script, 'w') as f:
+                f.write("@echo off\n")
+                f.write("echo Removing RunIT files...\n")
+                f.write(f"timeout /t 2 /nobreak > nul\n")
+                f.write(f"rmdir /s /q \"{install_dir}\"\n")
+                f.write("echo RunIT has been uninstalled.\n")
+                f.write("echo Thank you for using RunIT!\n")
+                f.write("pause\n")
+                f.write(f"del \"{uninstall_script}\"\n")
+            
+            # Execute the uninstall script and exit
+            print("✅ RunIT will be uninstalled after you close this window.")
+            print("   Thank you for using RunIT!")
+            
+            # Start the uninstall script in a new process
+            import subprocess
+            subprocess.Popen(['cmd', '/c', uninstall_script], 
+                            shell=True, 
+                            creationflags=subprocess.CREATE_NEW_CONSOLE)
+            
+            # Exit the current process
+            self.running = False
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Failed to uninstall: {str(e)}")
+            print(f"❌ Failed to uninstall: {str(e)}")
+            return False
+    
+    def cmd_adm(self, args):
+        """Advanced Developer Mode - delegates to IDER package."""
+        # Check if IDER package is installed
+        if not self.package_manager.is_package_installed("IDER_RunIT"):
+            self.logger.error("IDER package not installed")
+            print("❌ Advanced Developer Mode requires the IDER package.")
+            print("   Run: install IDER")
+            return False
+            
+        # The actual implementation will be handled by the IDER package
+        # through the package command handler mechanism
+        return False  # Return False to let the package handler take over
+        
+    def cmd_kill(self, args):
+        """Kill command handler - delegates to kill package."""
+        # Check if kill package is installed
+        if not self.package_manager.is_package_installed("kill_RunIT"):
+            self.logger.error("Kill package not installed")
+            print("❌ Process termination requires the kill package.")
+            print("   Run: install kill")
+            return False
+            
+        # The actual implementation will be handled by the kill package
+        # through the package command handler mechanism
+        return False  # Return False to let the package handler take over
 
     def run_command(self, command, args):
         """
@@ -562,7 +678,7 @@ def show_help():
     """Show command line help."""
     help_text = """
 ╔══════════════════════════════════════════════════════════════╗
-║                     RunIT CLI Tool v1.2.0                    ║
+║                     RunIT CLI Tool v1.3.0                    ║
 ║              Smart Terminal Assistant for Windows            ║
 ╚══════════════════════════════════════════════════════════════╝
 
@@ -591,6 +707,11 @@ COMMANDS (in interactive mode):
   stopdeploy              Stop any running deployment servers
   share                   Generate a public URL for the deployed site
   setport <number>        Change the deployment port (e.g. 'setport 8080')
+  restart                 Restart the RunIT tool
+  uninstall               Uninstall the RunIT tool
+  adm                     Enter Advanced Developer Mode
+  kill <file>             Terminate processes for a specific file
+  kill RunIT              Terminate all RunIT processes
 
 Note: If you encounter 'Port is already in use' error:
 1. Try running 'stopdeploy' command first
@@ -609,7 +730,7 @@ For detailed documentation, see docs/README.md
 
 def show_version():
     """Show version information."""
-    print("RunIT CLI Tool v1.2.0)")
+    print("RunIT CLI Tool v1.3.0")
     print("Copyright (c) 2025 RunIT Development Team")
     print("License: MIT")
     

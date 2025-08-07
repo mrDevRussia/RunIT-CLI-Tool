@@ -1,0 +1,16 @@
+{
+    "name": "kill_RunIT",
+    "version": "1.0.0",
+    "description": "Kill processes for specific files or terminate all RunIT processes",
+    "author": "RunIT Team",
+    "main": "kill.py",
+    "dependencies": [
+        "psutil"
+    ],
+    "commands": {
+        "kill": {
+            "description": "Kill processes for a specific file or all RunIT processes",
+            "usage": "kill <file> | kill RunIT"
+        }
+    }
+}

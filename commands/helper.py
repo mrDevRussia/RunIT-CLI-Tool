@@ -20,7 +20,7 @@ class HelpDisplay:
         """Display general help information with all available commands."""
         help_text = """
 ╔══════════════════════════════════════════════════════════════╗
-║                      RunIT v1.2.0 - Help                     ║
+║                      RunIT v1.3.0 - Help                     ║
 ║              Smart Terminal Assistant for Windows            ║
 ║                Always for you, alwways with you              ║
 ╚══════════════════════════════════════════════════════════════╝
@@ -142,11 +142,15 @@ class HelpDisplay:
    
 
 
-🔧 UTILITY COMMANDS:
+🔧 UTILITY COMMANDS (Updated v1.3):
    help [command]                Show help (general or specific)
    test                          Test RunIT functionality
    runai                         Use offline AI assistant
    clear                         Clear the terminal screen
+   restart                       Restart the RunIT tool
+   uninstall                     Uninstall the RunIT tool
+   adm [dir] [--independent|-i]  Advanced Developer Mode
+   kill <file> / kill RunIT      Kill processes for a file or all RunIT processes
    exit / quit                   Exit RunIT
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -189,6 +193,104 @@ Other:
             command (str): Command name to show help for
         """
         command_help = {
+            'restart': """
+🔄 RESTART COMMAND
+
+SYNTAX:
+   restart
+
+DESCRIPTION:
+   Restarts the RunIT tool. This is useful when you've installed new packages
+   or when you want to refresh the tool's state.
+
+EXAMPLES:
+   restart     → Restarts the RunIT tool
+
+NOTES:
+   • All unsaved work in the current session will be lost
+   • The tool will restart with the same arguments it was originally launched with
+""",
+            'uninstall': """
+🗑️ UNINSTALL COMMAND
+
+SYNTAX:
+   uninstall
+
+DESCRIPTION:
+   Completely removes RunIT from your system, including all installed packages,
+   settings, and cached files.
+
+EXAMPLES:
+   uninstall   → Uninstalls the RunIT tool
+
+NOTES:
+   • This action is irreversible
+   • You will be prompted to confirm before uninstallation proceeds
+   • All data associated with RunIT will be removed
+""",
+            'adm': """
+🖥️ ADVANCED DEVELOPER MODE (ADM)
+
+SYNTAX:
+   adm [directory] [--independent|-i]
+
+DESCRIPTION:
+   Enters Advanced Developer Mode, providing an integrated development environment
+   within RunIT. ADM offers a professional CLI interface with advanced file management,
+   project analysis, integrated editing, and process management capabilities.
+
+REQUIREMENTS:
+   • IDER_RunIT package must be installed
+   • Install with: install IDER
+
+OPTIONS:
+   • [directory]           → Open ADM in the specified directory
+   • --independent, -i     → Launch ADM in independent mode (separate process)
+
+FEATURES:
+   • Professional CLI interface with syntax highlighting
+   • Advanced file management and navigation
+   • Project analysis and statistics
+   • Integrated editing capabilities
+   • Process management
+   • Customizable themes
+
+EXAMPLES:
+   adm                     → Enters Advanced Developer Mode
+   adm C:\Projects         → Opens ADM in the Projects directory
+   adm --independent       → Launches ADM in independent mode
+   adm projects -i         → Opens ADM in projects dir as independent process
+
+NOTES:
+   • Type 'help' within ADM for a list of available commands
+   • Type 'exit' to return to standard RunIT mode
+   • Independent mode runs ADM in a separate process
+""",
+            'kill': """
+⚡ KILL COMMAND
+
+SYNTAX:
+   kill <file>
+   kill RunIT
+
+DESCRIPTION:
+   Terminates processes associated with a specific file or all RunIT processes.
+   This is useful for stopping runaway scripts or cleaning up after testing.
+
+REQUIREMENTS:
+   • kill_RunIT package must be installed
+   • Install with: install kill
+
+EXAMPLES:
+   kill script.py    → Terminates all processes running script.py
+   kill server.js    → Terminates all Node.js processes for server.js
+   kill RunIT        → Terminates all processes started by RunIT
+
+NOTES:
+   • Uses advanced process detection to find related processes
+   • Works with Python, Node.js, and batch processes
+   • Cross-platform compatible
+""",
             'zen': """
 🧘 ZEN MODE - Mindful Code Reading
 

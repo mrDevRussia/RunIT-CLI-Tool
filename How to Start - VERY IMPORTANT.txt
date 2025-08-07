@@ -1,0 +1,17 @@
+How to start:
+
+I think you now are lost, but here is how to start.
+
+1. Double click on install_deps.bat  to install all dependencies.
+2. Double click on  RunIT.bat to start using the tool
+
+That's it!
+
+There is more to explore, that's your mission.
+
+I've just instructed you how to start with the first time,
+you are able to upgrade the tool by doing your own packages or install our official packages by " install ", i advice you to check docs for more info.
+
+
+Your assistant between your hands.
+Happy coding!

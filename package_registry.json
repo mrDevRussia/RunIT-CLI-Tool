@@ -27,18 +27,28 @@
       "installed": true,
       "install_path": "packages/ilovebeans_RunIT"
     },
-    "ilovebeans_RunIT": {
-      "name": "ilovebeans_RunIT",
-      "version": "ilovebeans_RunIT@latest",
-      "description": "No description available",
-      "repository": "https://github.com/mrDevRussia/RunIT-ilovebeans_RunIT-latest",
+    "IDER_RunIT@latest": {
+      "name": "IDER_RunIT",
+      "version": "1.0.0",
+      "description": "Advanced Dev mode",
+      "main_file": "ider.py",
+      "dependencies": [],
       "installed": true,
-      "install_path": "packages\\ilovebeans_RunIT"
+      "install_path": "packages/IDER_RunIT"
+    },
+    "kill_RunIT@latest": {
+      "name": "kill_RunIT",
+      "version": "1.0.0",
+      "description": "Terminate processes associated with files",
+      "main_file": "kill.py",
+      "dependencies": ["psutil"],
+      "installed": true,
+      "install_path": "packages/kill_RunIT"
     }
   },
   "core_tool": {
     "name": "RunIT",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "last_updated": "2025-08-02 00:03:09"
   }
 }
