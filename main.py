@@ -4,7 +4,7 @@ RunIT - Smart Terminal Assistant for Windows
 A professional CLI tool for running, creating, and analyzing code files.
 
 Author: RunIT Development Team
-Version: 1.3.0
+Version: 1.3.1
 License: MIT
 """
 
@@ -211,7 +211,7 @@ class RunITCLI:
         """Display the RunIT welcome banner."""
         banner = """
 ╔══════════════════════════════════════════════════════════════╗
-║                         RunIT v1.3.0                         ║
+║                         RunIT v1.3.1                         ║
 ║              Smart Terminal Assistant for Windows            ║
 ║                Your assistant between your hands             ║
 ╠══════════════════════════════════════════════════════════════╣
@@ -678,7 +678,7 @@ def show_help():
     """Show command line help."""
     help_text = """
 ╔══════════════════════════════════════════════════════════════╗
-║                     RunIT CLI Tool v1.3.0                    ║
+║                     RunIT CLI Tool v1.3.1                    ║
 ║              Smart Terminal Assistant for Windows            ║
 ╚══════════════════════════════════════════════════════════════╝
 
@@ -730,7 +730,7 @@ For detailed documentation, see docs/README.md
 
 def show_version():
     """Show version information."""
-    print("RunIT CLI Tool v1.3.0")
+    print("RunIT CLI Tool v1.3.1")
     print("Copyright (c) 2025 RunIT Development Team")
     print("License: MIT")
     
