@@ -4,7 +4,7 @@ Package Manager for RunIT CLI Tool
 Handles package installation, updates, and management.
 
 Author: RunIT Development Team
-Version: 1.3.0
+Version: 1.3.1
 License: MIT
 """
 
@@ -34,7 +34,7 @@ class PackageManager:
         """Initialize the Package Manager."""
         self.logger = Logger()
         self.file_utils = FileUtils()
-        self.current_version = "1.3.0"
+        self.current_version = "1.3.1"
         
         # Package directories
         self.packages_dir = Path("packages")
