@@ -205,7 +205,7 @@ Fixed issues with package installation system from GitHub Improved error handlin
 
 
 
-Patch update Version 1.3.1
+## Patch update Version 1.3.1
 # Aegis Vanguard (AV) - Security Scanner Package
 Version 1.0.0 - August 23 2025
 
