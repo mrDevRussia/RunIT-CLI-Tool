@@ -1,6 +1,6 @@
 # 🚀 RunIT - Smart Terminal Assistant for Windows
 
-[![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](https://github.com/runit/releases)
+[![Version](https://img.shields.io/badge/version-1.3.1-blue.svg)](https://github.com/runit/releases)
 [![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
 [![Python](https://img.shields.io/badge/python-3.8+-green.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
@@ -243,6 +243,30 @@ exit / quit                  # Exit RunIT
 - **🎨 User-Friendly**: Intuitive commands and helpful documentation
 - **🔄 Always Updated**: Stay current with automatic updates
 - **💻 Windows Optimized**: Designed specifically for Windows environments
+
+
+
+
+
+
+## 🆕 Package Update: Aegis Vanguard (AV) - Security Scanner
+
+**Release Date:** August 23, 2025
+
+As part of the latest patch update, RunIT now includes a powerful security scanner package called **Aegis Vanguard (AV)**. This package enhances your workflow by providing comprehensive website security scanning and actionable recommendations.
+
+### 🔍 AV Features
+
+- **Comprehensive Vulnerability Scanning**: Scan HTML, JS, PHP, and configuration files for security issues
+- **Risk Assessment**: Detect vulnerabilities and categorize their severity (Critical, High, Medium, Low)
+- **Fix Suggestions**: Get practical recommendations to mitigate each detected vulnerability
+- **Detailed Reporting**: Export reports in JSON, HTML, or PDF formats
+- **Command Integration**: Run directly from RunIT using the command:
+```bash
+av <website_folder>
+
+
+
 
 ## 📚 Documentation
 
