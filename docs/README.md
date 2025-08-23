@@ -1,6 +1,6 @@
 # 🚀 RunIT - Smart Terminal Assistant for Windows
 
-[![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)](https://github.com/runit/releases)
+[![Version](https://img.shields.io/badge/version-1.3.1-blue.svg)](https://github.com/runit/releases)
 [![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
 [![Python](https://img.shields.io/badge/python-3.6+-green.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
@@ -166,6 +166,101 @@ exit / quit                  # Exit RunIT
 - **🎨 User-Friendly**: Intuitive commands and helpful documentation
 - **🔄 Always Updated**: Stay current with automatic updates
 - **💻 Windows Optimized**: Designed specifically for Windows environments
+
+
+
+
+Version 1.3 Major update summary
+What's New in Version 1.3.0 (August 5, 2025):
+
+-New Commands:
+
+restart Restart the RunIT tool quickly without closing and reopening Provides a seamless way to refresh the application after updates Maintains your current working directory
+
+uninstall Completely uninstall the RunIT tool from your system Creates a cleanup script that removes all files and settings Provides confirmation prompt to prevent accidental uninstallation
+
+adm Advanced Developer Mode - Access a specialized CLI interface in Powershell window Analyze or manage any file within the tool's project folder Requires the IDER package Provides professional development environment with syntax highlighting
+
+kill / kill RunIT Kill all processes for a specific file or stop all processes of the tool Helps manage resource usage and terminate stuck processes Requires the kill package
+
+-New Packages:
+
+IDER Integrated Development Environment for RunIT Required to use the adm command Features a cool interface that looks like an independent software CLI terminal shape with text highlights Supports advanced input features with auto-completion Includes colorized output for better readability Requires optional dependencies: colorama, prompt_toolkit
+
+kill Kill processes for a specific file or all RunIT processes Usage: kill or kill RunIT Helps manage system resources by terminating unnecessary processes Requires optional dependency: psutil
+
+-Improvements:
+
+Dependency Management Enhanced dependency installation system Added Python version compatibility check (requires Python 3.8+) Improved error handling for missing dependencies Added verification for core Python dependencies Better feedback during installation process
+
+Package System Improved package installation from GitHub Enhanced package registry management Better error handling for package operations Updated package template documentation
+
+Self-Test Functionality Comprehensive system testing for core modules Verification of utility modules Directory structure validation Sample files integrity check Python execution verification
+
+-Bug Fixes:
+
+Fixed issues with package installation system from GitHub Improved error handling in deployment and hosting features Enhanced stability when running multiple commands Fixed process management to prevent orphaned processes
+
+
+
+
+
+Patch update Version 1.3.1
+# Aegis Vanguard (AV) - Security Scanner Package
+Version 1.0.0 - August 23 2025
+
+## Package Information
+- Name: aegis_vanguard_RunIT
+- Description: Security scanner for websites to detect vulnerabilities and provide fix suggestions
+- Author: RunIT Team
+- License: MIT
+- Minimum RunIT Version: 1.3.1
+
+## Features
+- Comprehensive scanning of HTML, JS, PHP, and configuration files
+- Risk assessment with severity levels (Critical, High, Medium, Low)
+- Detailed reporting in multiple formats (JSON, HTML, PDF)
+- Fix suggestions for each detected vulnerability
+
+## Commands
+- av <website_folder>: Scan website folder for security vulnerabilities
+
+## Vulnerability Detection Capabilities
+
+### Enhanced SQL Injection Detection
+- Improved pattern matching to reduce false positives
+- Detects SQL injection in JavaScript query construction
+- Severity: High
+- Fix: Use Prepared Statements or ORM instead of raw queries
+
+### Cross-Site Request Forgery (CSRF) Detection
+- Identifies forms without CSRF protection tokens
+- Detects JavaScript form submissions without proper validation
+- Severity: High
+- Fix: Implement anti-CSRF tokens in all forms and validate them on form submission
+
+### Insecure Direct Object Reference (IDOR) Detection
+- Identifies direct references to user IDs, account IDs, and other sensitive identifiers
+- Detects unvalidated parameter usage in requests
+- Severity: High
+- Fix: Implement proper access control checks and use indirect references
+
+### Insecure Deserialization Detection
+- Identifies unsafe deserialization of user-controlled data
+- Detects parsing of untrusted JSON and other serialized formats
+- Severity: Critical
+- Fix: Validate and sanitize data before deserialization, use safer alternatives like JSON
+
+### Additional Detections
+- Debug Mode: Identifies development/debug settings in production code
+- Weak Authentication: Detects weak password storage and authentication mechanisms
+
+## Dependencies
+- colorama: For colored terminal output
+- reportlab: For PDF report generation
+- jinja2: For HTML report generation
+
+
 
 ## 📚 Documentation
 
