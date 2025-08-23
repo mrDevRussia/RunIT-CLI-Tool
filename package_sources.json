@@ -40,6 +40,16 @@
       "verified": true,
       "last_updated": "2025-05-08"
     },
+    {
+      "name": "aegis_vanguard_RunIT",
+      "repository": "https://github.com/mrDevRussia/aegis_vanguard_RunIT",
+      "install_command": "install av_RunIT@latest",
+      "description": "Scan files for vulnerable",
+      "author": "mrDevRussia",
+      "tags": ["security", "utility"],
+      "verified": true,
+      "last_updated": "2025-23-08"
+    },
  {
       "name": "IDER_RunIT",
       "repository": "https://github.com/mrDevRussia/IDER_RunIT",
