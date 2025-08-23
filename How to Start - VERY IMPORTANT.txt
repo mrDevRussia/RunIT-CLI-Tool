@@ -1,6 +1,6 @@
 How to start:
 
-I think you now are lost, but here is how to start.
+I think you are lost, but here is how to start.
 
 1. Double click on install_deps.bat  to install all dependencies.
 2. Double click on  RunIT.bat to start using the tool

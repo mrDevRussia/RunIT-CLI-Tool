@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Vulnerabilities</title>
+</head>
+<body>
+    <h1>Test Vulnerabilities Page</h1>
+    
+    <!-- SQL Injection Vulnerability -->
+    <script>
+        function searchUsers() {
+            var userId = document.getElementById('userId').value;
+            execute("SELECT * FROM users WHERE id = " + userId.value);
+            query("SELECT * FROM users WHERE id = " + document.getElementById('userId').value);
+        }
+    </script>
+    
+    <!-- XSS Vulnerability -->
+    <script>
+        function displayComment() {
+            document.getElementById('commentDisplay').innerHTML = document.getElementById('comment').value;
+        }
+    </script>
+    
+    <!-- CSRF Vulnerability -->
+    <form action="/transfer" method="POST">
+        <input type="text" name="amount" placeholder="Amount">
+        <input type="text" name="to" placeholder="Recipient">
+        <button type="submit">Transfer</button>
+    </form>
+    
+    <!-- IDOR Vulnerability -->
+    <script>
+        function getProfile() {
+            var user_id = document.getElementById('profileId').value;
+            fetch('/api/profile?id=' + user_id);
+        }
+    </script>
+    
+    <!-- Insecure Deserialization -->
+    <script>
+        function loadUserData() {
+            var userData = document.getElementById('userData').value;
+            var user = JSON.parse(userData);
+            displayUser(user);
+        }
+    </script>
+    
+    <!-- Debug Mode -->
+    <script>
+        var debug = true;
+        var development = 1;
+    </script>
+    
+    <!-- Weak Authentication -->
+    <script>
+        var password = "12345";
+        var hash = md5(password);
+    </script>
+    
+    <div>
+        <h2>SQL Injection Test</h2>
+        <input type="text" id="userId" placeholder="Enter user ID">
+        <button onclick="searchUsers()">Search</button>
+    </div>
+    
+    <div>
+        <h2>XSS Test</h2>
+        <input type="text" id="comment" placeholder="Enter comment">
+        <button onclick="displayComment()">Post Comment</button>
+        <div id="commentDisplay"></div>
+    </div>
+    
+    <div>
+        <h2>IDOR Test</h2>
+        <input type="text" id="profileId" placeholder="Enter profile ID">
+        <button onclick="getProfile()">View Profile</button>
+    </div>
+    
+    <div>
+        <h2>Insecure Deserialization Test</h2>
+        <textarea id="userData" placeholder="Enter user data JSON"></textarea>
+        <button onclick="loadUserData()">Load User</button>
+    </div>
+</body>
+</html>

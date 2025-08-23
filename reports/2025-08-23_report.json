@@ -1,0 +1,79 @@
+{
+  "scan_date": "2025-08-23T02:42:39.835644",
+  "website_folder": "samples/",
+  "vulnerabilities": [
+    {
+      "type": "sql_injection",
+      "file": "test_sql.html",
+      "line": 13,
+      "severity": "high",
+      "description": "SQL Injection vulnerability detected",
+      "fix": "Use Prepared Statements or ORM instead of raw queries"
+    },
+    {
+      "type": "sql_injection",
+      "file": "test_sql.html",
+      "line": 14,
+      "severity": "high",
+      "description": "SQL Injection vulnerability detected",
+      "fix": "Use Prepared Statements or ORM instead of raw queries"
+    },
+    {
+      "type": "sql_injection",
+      "file": "test_vulnerabilities.html",
+      "line": 13,
+      "severity": "high",
+      "description": "SQL Injection vulnerability detected",
+      "fix": "Use Prepared Statements or ORM instead of raw queries"
+    },
+    {
+      "type": "sql_injection",
+      "file": "test_vulnerabilities.html",
+      "line": 14,
+      "severity": "high",
+      "description": "SQL Injection vulnerability detected",
+      "fix": "Use Prepared Statements or ORM instead of raw queries"
+    },
+    {
+      "type": "debug_mode",
+      "file": "test_vulnerabilities.html",
+      "line": 51,
+      "severity": "low",
+      "description": "Debug mode enabled in production",
+      "fix": "Disable debug mode in production environments"
+    },
+    {
+      "type": "debug_mode",
+      "file": "test_vulnerabilities.html",
+      "line": 52,
+      "severity": "low",
+      "description": "Debug mode enabled in production",
+      "fix": "Disable debug mode in production environments"
+    },
+    {
+      "type": "weak_auth",
+      "file": "test_vulnerabilities.html",
+      "line": 57,
+      "severity": "high",
+      "description": "Weak Authentication detected",
+      "fix": "Use strong password hashing (bcrypt/Argon2) and enforce password policies"
+    },
+    {
+      "type": "weak_auth",
+      "file": "test_vulnerabilities.html",
+      "line": 58,
+      "severity": "high",
+      "description": "Weak Authentication detected",
+      "fix": "Use strong password hashing (bcrypt/Argon2) and enforce password policies"
+    }
+  ],
+  "summary": {
+    "total": 8,
+    "by_severity": {
+      "critical": 0,
+      "high": 6,
+      "medium": 0,
+      "low": 2
+    }
+  }
+}

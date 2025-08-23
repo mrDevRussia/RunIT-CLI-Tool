@@ -44,6 +44,15 @@
       "dependencies": ["psutil"],
       "installed": true,
       "install_path": "packages/kill_RunIT"
+    },
+    "aegis_vanguard_RunIT@latest": {
+      "name": "aegis_vanguard_RunIT",
+      "version": "1.0.0",
+      "description": "Aegis Vanguard is a powerful security scanning tool for websites that detects vulnerabilities in your web application code and provides actionable fix suggestions.",
+      "main_file": "aegis_vanguard.py",
+      "dependencies": [],
+      "installed": true,
+      "install_path": "packages/aegis_vanguard_RunIT"
     }
   },
   "core_tool": {

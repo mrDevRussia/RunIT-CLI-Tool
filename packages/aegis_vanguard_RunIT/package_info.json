@@ -1,0 +1,20 @@
+{
+    "name": "aegis_vanguard_RunIT",
+    "version": "1.0.0",
+    "description": "Security scanner for websites to detect vulnerabilities and provide fix suggestions",
+    "author": "RunIT Team",
+    "main_file": "aegis_vanguard.py",
+    "dependencies": [
+        "colorama",
+        "reportlab",
+        "jinja2"
+    ],
+    "commands": {
+        "av": {
+            "description": "Scan website folder for security vulnerabilities",
+            "usage": "av <website_folder>"
+        }
+    },
+    "minimum_runit_version": "1.3.0",
+    "license": "MIT"
+}

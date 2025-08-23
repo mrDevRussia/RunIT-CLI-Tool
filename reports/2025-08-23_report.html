@@ -1,0 +1,335 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Aegis Vanguard Security Scan Report</title>
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+                
+                :root {
+                    --primary-color: #0a192f;
+                    --secondary-color: #172a45;
+                    --accent-color: #64ffda;
+                    --text-color: #e6f1ff;
+                    --critical-color: #ff5252;
+                    --high-color: #ff9100;
+                    --medium-color: #ffeb3b;
+                    --low-color: #4caf50;
+                }
+                
+                body { 
+                    font-family: 'Roboto Mono', monospace;
+                    margin: 0;
+                    padding: 0;
+                    background-color: var(--primary-color);
+                    color: var(--text-color);
+                    line-height: 1.6;
+                }
+                
+                .container {
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    padding: 20px;
+                }
+                
+                header {
+                    background-color: var(--secondary-color);
+                    padding: 20px;
+                    border-bottom: 3px solid var(--accent-color);
+                    position: relative;
+                    overflow: hidden;
+                }
+                
+                header::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: repeating-linear-gradient(
+                        45deg,
+                        transparent,
+                        transparent 10px,
+                        rgba(10, 25, 47, 0.1) 10px,
+                        rgba(10, 25, 47, 0.1) 20px
+                    );
+                    z-index: 1;
+                }
+                
+                .header-content {
+                    position: relative;
+                    z-index: 2;
+                }
+                
+                h1 {
+                    color: var(--accent-color);
+                    margin: 0;
+                    font-size: 2.5em;
+                    text-transform: uppercase;
+                    letter-spacing: 2px;
+                    text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+                }
+                
+                h2 {
+                    color: var(--accent-color);
+                    border-bottom: 2px solid var(--accent-color);
+                    padding-bottom: 10px;
+                    margin-top: 30px;
+                }
+                
+                .info {
+                    background-color: var(--secondary-color);
+                    padding: 20px;
+                    border-radius: 5px;
+                    margin: 20px 0;
+                    border-left: 4px solid var(--accent-color);
+                }
+                
+                .summary {
+                    background-color: var(--secondary-color);
+                    padding: 20px;
+                    border-radius: 5px;
+                    margin: 20px 0;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                }
+                
+                .stats-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    gap: 15px;
+                    margin-top: 20px;
+                }
+                
+                .stat-box {
+                    background-color: var(--primary-color);
+                    padding: 15px;
+                    border-radius: 5px;
+                    text-align: center;
+                    border: 1px solid rgba(230, 241, 255, 0.1);
+                }
+                
+                .stat-box h3 {
+                    margin: 0;
+                    font-size: 0.9em;
+                    text-transform: uppercase;
+                }
+                
+                .stat-box .value {
+                    font-size: 2em;
+                    font-weight: bold;
+                    margin: 10px 0;
+                }
+                
+                .critical-stat { color: var(--critical-color); }
+                .high-stat { color: var(--high-color); }
+                .medium-stat { color: var(--medium-color); }
+                .low-stat { color: var(--low-color); }
+                
+                .vulnerability {
+                    margin: 20px 0;
+                    padding: 20px;
+                    border-radius: 5px;
+                    background-color: var(--secondary-color);
+                    border-left: 4px solid #ccc;
+                    position: relative;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                }
+                
+                .vulnerability::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    width: 0;
+                    height: 0;
+                    border-style: solid;
+                    border-width: 0 40px 40px 0;
+                    border-color: transparent var(--primary-color) transparent transparent;
+                }
+                
+                .vulnerability h3 {
+                    margin-top: 0;
+                    color: #fff;
+                }
+                
+                .critical {
+                    border-left-color: var(--critical-color);
+                    background-color: rgba(255, 82, 82, 0.1);
+                }
+                
+                .high {
+                    border-left-color: var(--high-color);
+                    background-color: rgba(255, 145, 0, 0.1);
+                }
+                
+                .medium {
+                    border-left-color: var(--medium-color);
+                    background-color: rgba(255, 235, 59, 0.1);
+                }
+                
+                .low {
+                    border-left-color: var(--low-color);
+                    background-color: rgba(76, 175, 80, 0.1);
+                }
+                
+                .fix {
+                    margin-top: 15px;
+                    padding: 15px;
+                    background-color: var(--primary-color);
+                    border-radius: 5px;
+                    border-left: 4px solid var(--accent-color);
+                }
+                
+                .code {
+                    font-family: 'Roboto Mono', monospace;
+                    background-color: rgba(10, 25, 47, 0.5);
+                    padding: 2px 5px;
+                    border-radius: 3px;
+                }
+                
+                footer {
+                    text-align: center;
+                    margin-top: 40px;
+                    padding: 20px;
+                    background-color: var(--secondary-color);
+                    border-top: 3px solid var(--accent-color);
+                    font-size: 0.9em;
+                }
+                
+                .shield-icon {
+                    display: inline-block;
+                    margin-right: 10px;
+                    font-size: 1.2em;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <header>
+                    <div class="header-content">
+                        <h1>🛡️ Aegis Vanguard</h1>
+                        <p>Advanced Website Security Scanner</p>
+                    </div>
+                </header>
+                
+                <div class="info">
+                    <p><span class="shield-icon">🔍</span> <strong>Scan Date:</strong> 2025-08-23 02:42:39</p>
+                    <p><span class="shield-icon">📁</span> <strong>Website Folder:</strong> samples/</p>
+                </div>
+                
+                <div class="summary">
+                    <h2>🔐 Vulnerability Summary</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <h3>Total Vulnerabilities</h3>
+                            <div class="value">8</div>
+                        </div>
+                        
+                        <div class="stat-box">
+                            <h3>Critical</h3>
+                            <div class="value critical-stat">0</div>
+                        </div>
+                        
+                        <div class="stat-box">
+                            <h3>High</h3>
+                            <div class="value high-stat">6</div>
+                        </div>
+                        
+                        <div class="stat-box">
+                            <h3>Medium</h3>
+                            <div class="value medium-stat">0</div>
+                        </div>
+                        
+                        <div class="stat-box">
+                            <h3>Low</h3>
+                            <div class="value low-stat">2</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2>⚠️ Detected Vulnerabilities</h2>
+                
+                
+                    
+                        <div class="vulnerability high">
+                            <h3>SQL Injection vulnerability detected (High)</h3>
+                            <p><strong>File:</strong> <span class="code">test_sql.html</span> (Line: 13)</p>
+                            <div class="fix">
+                                <strong>🔧 Recommended Fix:</strong><br>
+                                Use Prepared Statements or ORM instead of raw queries
+                            </div>
+                        </div>
+                    
+                        <div class="vulnerability high">
+                            <h3>SQL Injection vulnerability detected (High)</h3>
+                            <p><strong>File:</strong> <span class="code">test_sql.html</span> (Line: 14)</p>
+                            <div class="fix">
+                                <strong>🔧 Recommended Fix:</strong><br>
+                                Use Prepared Statements or ORM instead of raw queries
+                            </div>
+                        </div>
+                    
+                        <div class="vulnerability high">
+                            <h3>SQL Injection vulnerability detected (High)</h3>
+                            <p><strong>File:</strong> <span class="code">test_vulnerabilities.html</span> (Line: 13)</p>
+                            <div class="fix">
+                                <strong>🔧 Recommended Fix:</strong><br>
+                                Use Prepared Statements or ORM instead of raw queries
+                            </div>
+                        </div>
+                    
+                        <div class="vulnerability high">
+                            <h3>SQL Injection vulnerability detected (High)</h3>
+                            <p><strong>File:</strong> <span class="code">test_vulnerabilities.html</span> (Line: 14)</p>
+                            <div class="fix">
+                                <strong>🔧 Recommended Fix:</strong><br>
+                                Use Prepared Statements or ORM instead of raw queries
+                            </div>
+                        </div>
+                    
+                        <div class="vulnerability low">
+                            <h3>Debug mode enabled in production (Low)</h3>
+                            <p><strong>File:</strong> <span class="code">test_vulnerabilities.html</span> (Line: 51)</p>
+                            <div class="fix">
+                                <strong>🔧 Recommended Fix:</strong><br>
+                                Disable debug mode in production environments
+                            </div>
+                        </div>
+                    
+                        <div class="vulnerability low">
+                            <h3>Debug mode enabled in production (Low)</h3>
+                            <p><strong>File:</strong> <span class="code">test_vulnerabilities.html</span> (Line: 52)</p>
+                            <div class="fix">
+                                <strong>🔧 Recommended Fix:</strong><br>
+                                Disable debug mode in production environments
+                            </div>
+                        </div>
+                    
+                        <div class="vulnerability high">
+                            <h3>Weak Authentication detected (High)</h3>
+                            <p><strong>File:</strong> <span class="code">test_vulnerabilities.html</span> (Line: 57)</p>
+                            <div class="fix">
+                                <strong>🔧 Recommended Fix:</strong><br>
+                                Use strong password hashing (bcrypt/Argon2) and enforce password policies
+                            </div>
+                        </div>
+                    
+                        <div class="vulnerability high">
+                            <h3>Weak Authentication detected (High)</h3>
+                            <p><strong>File:</strong> <span class="code">test_vulnerabilities.html</span> (Line: 58)</p>
+                            <div class="fix">
+                                <strong>🔧 Recommended Fix:</strong><br>
+                                Use strong password hashing (bcrypt/Argon2) and enforce password policies
+                            </div>
+                        </div>
+                    
+                
+                
+                <footer>
+                    <p>Generated by Aegis Vanguard Security Scanner | RunIT CLI Tool</p>
+                </footer>
+            </div>
+        </html>
+        

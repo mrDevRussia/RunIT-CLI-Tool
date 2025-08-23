@@ -58,6 +58,15 @@
             <p>Edit your files and see changes instantly on refresh.</p>
         </div>
 
+        <!-- Vulnerable code for testing (line 57) -->
+        <script>
+            function loginUser() {
+                var username = document.getElementById('username').value;
+                // SQL Injection vulnerability
+                execute("SELECT * FROM users WHERE username = '" + username + "' AND password = '" + password + "'");
+            }
+        </script>
+
         <div class="feature">
             <h3>📱 Mobile-Friendly</h3>
             <p>Test your responsive design with local network access.</p>

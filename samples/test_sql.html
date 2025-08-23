@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SQL Injection Test</title>
+</head>
+<body>
+    <h1>SQL Injection Test Page</h1>
+    
+    <!-- SQL Injection Vulnerability that matches the pattern -->
+    <script>
+        function searchUsers() {
+            var userId = document.getElementById('userId');
+            execute("SELECT * FROM users WHERE id = " + userId.value);
+            query("SELECT * FROM users WHERE id = " + document.getElementById('userId').value);
+        }
+    </script>
+    
+    <div>
+        <h2>SQL Injection Test</h2>
+        <input type="text" id="userId" placeholder="Enter user ID">
+        <button onclick="searchUsers()">Search</button>
+    </div>
+</body>
+</html>

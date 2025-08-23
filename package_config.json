@@ -19,7 +19,8 @@
     "ilovebeans_RunIT",
     "kill_RunIT",
     "IDER_RunIT",
-    "zen-mode_RunIT"
+    "zen-mode_RunIT",
+    "aegis_vanguard_RunIT"
   ],
   "package_paths": {
     "preview_RunIT@latest": "packages/preview_RunIT",
@@ -27,6 +28,7 @@
     "ilovebeans_RunIT": "packages\\ilovebeans_RunIT",
     "IDER_RunIT": "packages\\IDER_RunIT",
     "kill_RunIT": "packages/kill_RunIT",
+    "aegis_vanguard_RunIT": "packages/aegis_vanguard_RunIT",
     "zen-mode_RunIT": "packages\\zen-mode_RunIT"
   }
 }
