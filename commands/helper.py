@@ -20,7 +20,7 @@ class HelpDisplay:
         """Display general help information with all available commands."""
         help_text = """
 ╔══════════════════════════════════════════════════════════════╗
-║                      RunIT v1.3.0 - Help                     ║
+║                      RunIT v1.3.1 - Help                     ║
 ║              Smart Terminal Assistant for Windows            ║
 ║                Always for you, alwways with you              ║
 ╚══════════════════════════════════════════════════════════════╝
