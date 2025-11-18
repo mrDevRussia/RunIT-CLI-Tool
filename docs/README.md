@@ -1,8 +1,8 @@
 # 🚀 RunIT - Smart Terminal Assistant for Windows
 
-[![Version](https://img.shields.io/badge/version-1.3.1-blue.svg)](https://github.com/runit/releases)
+[![Version](https://img.shields.io/badge/version-1.3.2-blue.svg)](https://github.com/runit/releases)
 [![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
-[![Python](https://img.shields.io/badge/python-3.6+-green.svg)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/python-3.8+-green.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 
 RunIT is a professional open-source Windows-only CLI tool that transforms your command prompt into a smart terminal assistant. It provides seamless execution, creation, and analysis of code files across multiple programming languages, all from within your familiar Windows CMD environment.
