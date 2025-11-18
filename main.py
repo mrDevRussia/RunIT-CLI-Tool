@@ -4,7 +4,7 @@ RunIT - Smart Terminal Assistant for Windows
 A professional CLI tool for running, creating, and analyzing code files.
 
 Author: RunIT Development Team
-Version: 1.3.1
+Version: 1.3.2
 License: MIT
 """
 
@@ -29,6 +29,7 @@ from commands.file_manager import FileManager
 from commands.deployer import Deployer
 from commands.converter import Converter
 from utils.logger import Logger
+from commands.p2pmsg import P2PMessenger
 
 
 class RunITCLI:
@@ -51,6 +52,7 @@ class RunITCLI:
         self.file_manager = FileManager()
         self.deployer = Deployer()
         self.converter = Converter()
+        self.p2pmsg = P2PMessenger()
         self.running = True
         
         # Initialize commands dictionary
@@ -86,6 +88,7 @@ class RunITCLI:
             'uninstall': self.cmd_uninstall,
             'adm': self.cmd_adm,
             'kill': self.cmd_kill,
+            'p2pmsg': self.cmd_p2pmsg,
         }
         
         # Load package commands
@@ -211,7 +214,7 @@ class RunITCLI:
         """Display the RunIT welcome banner."""
         banner = """
 ╔══════════════════════════════════════════════════════════════╗
-║                         RunIT v1.3.1                         ║
+║                         RunIT v1.3.2                         ║
 ║              Smart Terminal Assistant for Windows            ║
 ║                Your assistant between your hands             ║
 ╠══════════════════════════════════════════════════════════════╣
@@ -586,6 +589,14 @@ class RunITCLI:
         # through the package command handler mechanism
         return False  # Return False to let the package handler take over
 
+    def cmd_p2pmsg(self, args):
+        """Start encrypted global P2P messaging (host/guest)."""
+        try:
+            self.p2pmsg.start()
+        except Exception as e:
+            self.logger.error(f"p2pmsg error: {e}")
+            print(f"❌ p2pmsg error: {e}")
+
     def run_command(self, command, args):
         """
         Execute a command with given arguments.
@@ -678,7 +689,7 @@ def show_help():
     """Show command line help."""
     help_text = """
 ╔══════════════════════════════════════════════════════════════╗
-║                     RunIT CLI Tool v1.3.1                    ║
+║                     RunIT CLI Tool v1.3.2                    ║
 ║              Smart Terminal Assistant for Windows            ║
 ╚══════════════════════════════════════════════════════════════╝
 
@@ -730,7 +741,7 @@ For detailed documentation, see docs/README.md
 
 def show_version():
     """Show version information."""
-    print("RunIT CLI Tool v1.3.1")
+    print("RunIT CLI Tool v1.3.2")
     print("Copyright (c) 2025 RunIT Development Team")
     print("License: MIT")
     

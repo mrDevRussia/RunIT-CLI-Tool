@@ -43,7 +43,7 @@
     {
       "name": "aegis_vanguard_RunIT",
       "repository": "https://github.com/mrDevRussia/aegis_vanguard_RunIT",
-      "install_command": "install aegis_vanguard_RunIT@latest",
+      "install_command": "install av_RunIT@latest",
       "description": "Scan files for vulnerable",
       "author": "mrDevRussia",
       "tags": ["security", "utility"],

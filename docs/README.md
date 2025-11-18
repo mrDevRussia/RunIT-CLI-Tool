@@ -1,9 +1,9 @@
 # 🚀 RunIT - Smart Terminal Assistant for Windows
 
-[![Version](https://img.shields.io/badge/version-1.3.1-blue.svg)](https://github.com/mrDevRussia/RunIT-CLI-Tool/releases)
+[![Version](https://img.shields.io/badge/version-1.3.1-blue.svg)](https://github.com/runit/releases)
 [![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](https://www.microsoft.com/windows)
-[![Python](https://img.shields.io/badge/python-3.8+-green.svg)](https://www.python.org/)
-[![License](https://img.shields.io/badge/license-MIT-orange.svg)](https://github.com/mrDevRussia/RunIT-CLI-Tool/blob/main/LICENSE)
+[![Python](https://img.shields.io/badge/python-3.6+-green.svg)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 
 RunIT is a professional open-source Windows-only CLI tool that transforms your command prompt into a smart terminal assistant. It provides seamless execution, creation, and analysis of code files across multiple programming languages, all from within your familiar Windows CMD environment.
 
@@ -167,45 +167,177 @@ exit / quit                  # Exit RunIT
 - **🔄 Always Updated**: Stay current with automatic updates
 - **💻 Windows Optimized**: Designed specifically for Windows environments
 
+RunIT – Tool Patch Update Summary V1.3.2
+________________________________________
+
+
+New command: p2pmsg
+Version 1.0.0 - November 18 2025
 
 
 
-Version 1.3 Major update summary
-What's New in Version 1.3.0 (August 5, 2025):
+Overview
+- New command: p2pmsg — encrypted peer‑to‑peer messaging with host/guest handshake.
+- Version updates: CLI banner and helper now show v1.3.2; package manager and version.txt updated.
+- Docs: added a beginner‑friendly P2PMSG guide at docs/P2PMSG_GUIDE.md and linked it from the help menu and docs README.
 
--New Commands:
+p2pmsg Highlights
+- Encryption: AES‑256‑CBC with per‑message random IV; symmetric key derived from a 16‑digit session code via SHA‑256.
+- Privacy: messages are never stored; only minimal session metadata is cached in data/p2p_sessions.json.
+- Handshake: simple UDP handshake (HANDSHAKE/HANDSHAKE_ACK) establishes the tunnel; periodic NAT hole‑punch keepalives (PUNCH) help maintain connectivity.
+- Modes: Host generates a session code and listens; Guest enters the code, IP, and port to connect.
+- Local testing: Guest now accepts "localhost", "local", or blank IP to default to 127.0.0.1, making same‑device tests straightforward.
+- Cross‑network: Works on LAN using Host’s IPv4 (e.g., 192.168.x.x); supports internet connections with router UDP port forwarding.
 
-restart Restart the RunIT tool quickly without closing and reopening Provides a seamless way to refresh the application after updates Maintains your current working directory
+Advantages
+- End‑to‑end encryption: secure messaging using a session code‑derived key.
+- Lightweight & fast: UDP transport keeps overhead low for near‑real‑time chat.
+- Simple UX: interactive prompts guide Host/Guest setup with clear status messages.
+- Privacy by design: no message persistence; ephemeral session cache cleared on exit.
+- Flexible networking: local loopback (127.0.0.1), LAN IPs, and internet via port forwarding.
+- Beginner‑friendly docs: step‑by‑step guide with troubleshooting for firewall/NAT.
 
-uninstall Completely uninstall the RunIT tool from your system Creates a cleanup script that removes all files and settings Provides confirmation prompt to prevent accidental uninstallation
+How to Use (Quick)
+- Host: run p2pmsg, choose Host, share session code and printed port.
+- Guest (same device): enter session code, IP as localhost or blank, and the Host port.
+- Guest (same LAN): enter session code, Host’s LAN IPv4, and the Host port.
+- Guest (internet): enter session code, Host’s public IP, and the forwarded UDP port.
 
-adm Advanced Developer Mode - Access a specialized CLI interface in Powershell window Analyze or manage any file within the tool's project folder Requires the IDER package Provides professional development environment with syntax highlighting
+Troubleshooting (Summary)
+- Same device: use 127.0.0.1 and exact Host port.
+- Same LAN: use Host’s LAN IPv4; allow inbound UDP on Windows Firewall.
+- Internet: configure router UDP port forwarding to Host PC; add Windows Firewall inbound rule; use Host’s public IP.
+- CGNAT/strict NAT: some ISPs block inbound; consider requesting public IPv4, using IPv6 if supported, or using a VPN/overlay that provides public ports.
+- Stable forwarding: if desired, set a fixed UDP port in commands/p2pmsg.py (bind to a chosen port) and forward it.
 
-kill / kill RunIT Kill all processes for a specific file or stop all processes of the tool Helps manage resource usage and terminate stuck processes Requires the kill package
+Related Changes in 1.3.2
+- main.py: registered p2pmsg command, updated banner/version display to v1.3.2.
+- commands/helper.py: added p2pmsg entry and version bump; help points to docs/P2PMSG_GUIDE.md.
+- commands/package_manager.py: updated current version to 1.3.2 for consistency.
+- version.txt: created/updated to 1.3.2.
+- data/p2p_sessions.json: added for minimal session metadata (cleared on exit).
 
--New Packages:
-
-IDER Integrated Development Environment for RunIT Required to use the adm command Features a cool interface that looks like an independent software CLI terminal shape with text highlights Supports advanced input features with auto-completion Includes colorized output for better readability Requires optional dependencies: colorama, prompt_toolkit
-
-kill Kill processes for a specific file or all RunIT processes Usage: kill or kill RunIT Helps manage system resources by terminating unnecessary processes Requires optional dependency: psutil
-
--Improvements:
-
-Dependency Management Enhanced dependency installation system Added Python version compatibility check (requires Python 3.8+) Improved error handling for missing dependencies Added verification for core Python dependencies Better feedback during installation process
-
-Package System Improved package installation from GitHub Enhanced package registry management Better error handling for package operations Updated package template documentation
-
-Self-Test Functionality Comprehensive system testing for core modules Verification of utility modules Directory structure validation Sample files integrity check Python execution verification
-
--Bug Fixes:
-
-Fixed issues with package installation system from GitHub Improved error handling in deployment and hosting features Enhanced stability when running multiple commands Fixed process management to prevent orphaned processes
+For detailed instructions and beginner‑friendly steps, see docs/P2PMSG_GUIDE.md.
 
 
 
 
 
-## Patch update Version 1.3.1
+RunIT – Tool Patch Update Summary V1.3.1
+________________________________________
+
+
+Patch update Version 1.3.1
+# Aegis Vanguard (AV) - Security Scanner Package
+Version 1.0.0 - August 23 2025
+
+## Package Information
+- Name: aegis_vanguard_RunIT
+- Description: Security scanner for websites to detect vulnerabilities and provide fix suggestions
+- Author: RunIT Team
+- License: MIT
+- Minimum RunIT Version: 1.3.0
+
+## Features
+- Comprehensive scanning of HTML, JS, PHP, and configuration files
+- Risk assessment with severity levels (Critical, High, Medium, Low)
+- Detailed reporting in multiple formats (JSON, HTML, PDF)
+- Fix suggestions for each detected vulnerability
+
+## Commands
+- av <website_folder>: Scan website folder for security vulnerabilities
+
+## Vulnerability Detection Capabilities
+
+### Enhanced SQL Injection Detection
+- Improved pattern matching to reduce false positives
+- Detects SQL injection in JavaScript query construction
+- Severity: High
+- Fix: Use Prepared Statements or ORM instead of raw queries
+
+### Cross-Site Request Forgery (CSRF) Detection
+- Identifies forms without CSRF protection tokens
+- Detects JavaScript form submissions without proper validation
+- Severity: High
+- Fix: Implement anti-CSRF tokens in all forms and validate them on form submission
+
+### Insecure Direct Object Reference (IDOR) Detection
+- Identifies direct references to user IDs, account IDs, and other sensitive identifiers
+- Detects unvalidated parameter usage in requests
+- Severity: High
+- Fix: Implement proper access control checks and use indirect references
+
+### Insecure Deserialization Detection
+- Identifies unsafe deserialization of user-controlled data
+- Detects parsing of untrusted JSON and other serialized formats
+- Severity: Critical
+- Fix: Validate and sanitize data before deserialization, use safer alternatives like JSON
+
+### Additional Detections
+- Debug Mode: Identifies development/debug settings in production code
+- Weak Authentication: Detects weak password storage and authentication mechanisms
+
+## Dependencies
+- colorama: For colored terminal output
+- reportlab: For PDF report generation
+- jinja2: For HTML report generation
+
+## Example Usage
+
+
+
+Patch update Version 1.3.2
+# p2pmsg Update - Private messaging terminal
+Version 1.0.0 - November 18 2025
+
+
+
+Overview
+- New command: p2pmsg — encrypted peer‑to‑peer messaging with host/guest handshake.
+- Version updates: CLI banner and helper now show v1.3.2; package manager and version.txt updated.
+- Docs: added a beginner‑friendly P2PMSG guide at docs/P2PMSG_GUIDE.md and linked it from the help menu and docs README.
+
+p2pmsg Highlights
+- Encryption: AES‑256‑CBC with per‑message random IV; symmetric key derived from a 16‑digit session code via SHA‑256.
+- Privacy: messages are never stored; only minimal session metadata is cached in data/p2p_sessions.json.
+- Handshake: simple UDP handshake (HANDSHAKE/HANDSHAKE_ACK) establishes the tunnel; periodic NAT hole‑punch keepalives (PUNCH) help maintain connectivity.
+- Modes: Host generates a session code and listens; Guest enters the code, IP, and port to connect.
+- Local testing: Guest now accepts "localhost", "local", or blank IP to default to 127.0.0.1, making same‑device tests straightforward.
+- Cross‑network: Works on LAN using Host’s IPv4 (e.g., 192.168.x.x); supports internet connections with router UDP port forwarding.
+
+Advantages
+- End‑to‑end encryption: secure messaging using a session code‑derived key.
+- Lightweight & fast: UDP transport keeps overhead low for near‑real‑time chat.
+- Simple UX: interactive prompts guide Host/Guest setup with clear status messages.
+- Privacy by design: no message persistence; ephemeral session cache cleared on exit.
+- Flexible networking: local loopback (127.0.0.1), LAN IPs, and internet via port forwarding.
+- Beginner‑friendly docs: step‑by‑step guide with troubleshooting for firewall/NAT.
+
+How to Use (Quick)
+- Host: run p2pmsg, choose Host, share session code and printed port.
+- Guest (same device): enter session code, IP as localhost or blank, and the Host port.
+- Guest (same LAN): enter session code, Host’s LAN IPv4, and the Host port.
+- Guest (internet): enter session code, Host’s public IP, and the forwarded UDP port.
+
+Troubleshooting (Summary)
+- Same device: use 127.0.0.1 and exact Host port.
+- Same LAN: use Host’s LAN IPv4; allow inbound UDP on Windows Firewall.
+- Internet: configure router UDP port forwarding to Host PC; add Windows Firewall inbound rule; use Host’s public IP.
+- CGNAT/strict NAT: some ISPs block inbound; consider requesting public IPv4, using IPv6 if supported, or using a VPN/overlay that provides public ports.
+- Stable forwarding: if desired, set a fixed UDP port in commands/p2pmsg.py (bind to a chosen port) and forward it.
+
+Related Changes in 1.3.2
+- main.py: registered p2pmsg command, updated banner/version display to v1.3.2.
+- commands/helper.py: added p2pmsg entry and version bump; help points to docs/P2PMSG_GUIDE.md.
+- commands/package_manager.py: updated current version to 1.3.2 for consistency.
+- version.txt: created/updated to 1.3.2.
+- data/p2p_sessions.json: added for minimal session metadata (cleared on exit).
+
+For detailed instructions and beginner‑friendly steps, see docs/P2PMSG_GUIDE.md.
+
+
+
+Patch update Version 1.3.1
 # Aegis Vanguard (AV) - Security Scanner Package
 Version 1.0.0 - August 23 2025
 
@@ -259,6 +391,43 @@ Version 1.0.0 - August 23 2025
 - colorama: For colored terminal output
 - reportlab: For PDF report generation
 - jinja2: For HTML report generation
+
+
+
+
+
+Version 1.3 Major update summary
+What's New in Version 1.3.0 (August 5, 2025):
+
+-New Commands:
+
+restart Restart the RunIT tool quickly without closing and reopening Provides a seamless way to refresh the application after updates Maintains your current working directory
+
+uninstall Completely uninstall the RunIT tool from your system Creates a cleanup script that removes all files and settings Provides confirmation prompt to prevent accidental uninstallation
+
+adm Advanced Developer Mode - Access a specialized CLI interface in Powershell window Analyze or manage any file within the tool's project folder Requires the IDER package Provides professional development environment with syntax highlighting
+
+kill / kill RunIT Kill all processes for a specific file or stop all processes of the tool Helps manage resource usage and terminate stuck processes Requires the kill package
+
+-New Packages:
+
+IDER Integrated Development Environment for RunIT Required to use the adm command Features a cool interface that looks like an independent software CLI terminal shape with text highlights Supports advanced input features with auto-completion Includes colorized output for better readability Requires optional dependencies: colorama, prompt_toolkit
+
+kill Kill processes for a specific file or all RunIT processes Usage: kill or kill RunIT Helps manage system resources by terminating unnecessary processes Requires optional dependency: psutil
+
+-Improvements:
+
+Dependency Management Enhanced dependency installation system Added Python version compatibility check (requires Python 3.8+) Improved error handling for missing dependencies Added verification for core Python dependencies Better feedback during installation process
+
+Package System Improved package installation from GitHub Enhanced package registry management Better error handling for package operations Updated package template documentation
+
+Self-Test Functionality Comprehensive system testing for core modules Verification of utility modules Directory structure validation Sample files integrity check Python execution verification
+
+-Bug Fixes:
+
+Fixed issues with package installation system from GitHub Improved error handling in deployment and hosting features Enhanced stability when running multiple commands Fixed process management to prevent orphaned processes
+
+
 
 
 

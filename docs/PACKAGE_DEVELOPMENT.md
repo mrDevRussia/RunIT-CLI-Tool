@@ -8,10 +8,10 @@ Your package repository must contain these files:
 
 ```
 package_name/
-├── package_info.json   # Required: Package metadata and configuration
+├── package_info.json     # Required: Package metadata and configuration
 ├── your_package_name.py  # Required: Main package implementation
-├── README.md           # Required: Package documentation
-└── requirements.txt    # Optional: Python dependencies
+├── README.md             # Required: Package documentation
+└── requirements.txt      # Optional: Python dependencies
 ```
 
 ## Package Configuration

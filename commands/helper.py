@@ -20,7 +20,7 @@ class HelpDisplay:
         """Display general help information with all available commands."""
         help_text = """
 ╔══════════════════════════════════════════════════════════════╗
-║                      RunIT v1.3.1 - Help                     ║
+║                      RunIT v1.3.2 - Help                     ║
 ║              Smart Terminal Assistant for Windows            ║
 ║                Always for you, alwways with you              ║
 ╚══════════════════════════════════════════════════════════════╝
@@ -151,6 +151,7 @@ class HelpDisplay:
    uninstall                     Uninstall the RunIT tool
    adm [dir] [--independent|-i]  Advanced Developer Mode
    kill <file> / kill RunIT      Kill processes for a file or all RunIT processes
+   p2pmsg                        Encrypted global P2P messaging (host/guest)
    exit / quit                   Exit RunIT
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -257,7 +258,7 @@ FEATURES:
 
 EXAMPLES:
    adm                     → Enters Advanced Developer Mode
-   adm C:\Projects         → Opens ADM in the Projects directory
+   adm C:Projects         → Opens ADM in the Projects directory
    adm --independent       → Launches ADM in independent mode
    adm projects -i         → Opens ADM in projects dir as independent process
 
