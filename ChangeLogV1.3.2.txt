@@ -1,4 +1,4 @@
-RunIT – Tool Patch Update Summary V1.3.2
+Patch Update Summary V1.3.2
 ________________________________________
 
 
@@ -19,6 +19,17 @@ p2pmsg Highlights
 - Modes: Host generates a session code and listens; Guest enters the code, IP, and port to connect.
 - Local testing: Guest now accepts "localhost", "local", or blank IP to default to 127.0.0.1, making same‑device tests straightforward.
 - Cross‑network: Works on LAN using Host’s IPv4 (e.g., 192.168.x.x); supports internet connections with router UDP port forwarding.
+
+Security Upgrade (Nov 21, 2025)
+- Client ID Authentication: persistent UUID per device stored at data/client_id.json; Host enforces allowed_clients.
+- Diffie–Hellman Key Exchange (X25519): per‑session shared secret with HKDF‑derived AES/HMAC keys.
+- AES‑256‑GCM Encryption: authenticated encryption with per‑message nonce.
+- HMAC‑SHA256: per‑message signature; invalid packets dropped.
+- Ephemeral Session Keys: created per session and destroyed on /exit.
+- Fail2Ban: ban IP for 60 seconds after 3 failed handshakes.
+- Port Guardian Mode: lock port to first valid Guest IP; silently drop other traffic; optional --stealth mode.
+- Session Code Tokenization: session code is hashed (SHA‑256) and used only as a token, never as an encryption key.
+- New Command: cid — displays or generates Client ID, with explicit user consent.
 
 Advantages
 - End‑to‑end encryption: secure messaging using a session code‑derived key.

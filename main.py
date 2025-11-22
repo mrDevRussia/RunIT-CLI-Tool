@@ -89,6 +89,7 @@ class RunITCLI:
             'adm': self.cmd_adm,
             'kill': self.cmd_kill,
             'p2pmsg': self.cmd_p2pmsg,
+            'cid': self.cmd_cid,
         }
         
         # Load package commands
@@ -592,10 +593,31 @@ class RunITCLI:
     def cmd_p2pmsg(self, args):
         """Start encrypted global P2P messaging (host/guest)."""
         try:
-            self.p2pmsg.start()
+            self.p2pmsg.start(args)
         except Exception as e:
             self.logger.error(f"p2pmsg error: {e}")
             print(f"❌ p2pmsg error: {e}")
+
+    def cmd_cid(self, args):
+        from commands.security import generate_device_client_id, CLIENT_ID_PATH
+        try:
+            if CLIENT_ID_PATH.exists():
+                with open(CLIENT_ID_PATH, 'r', encoding='utf-8') as f:
+                    obj = json.load(f)
+                    cid = obj.get('client_id')
+                    if cid:
+                        print(f"🆔 Client ID: {cid}")
+                        return
+            print("This will generate a persistent Client ID based on your device and network info.")
+            agree = input("Do you agree? (yes/no): ").strip().lower()
+            if agree not in ['y', 'yes']:
+                print("❌ Generation cancelled.")
+                return
+            cid = generate_device_client_id()
+            print(f"✅ Client ID generated: {cid}")
+        except Exception as e:
+            self.logger.error(f"cid error: {e}")
+            print(f"❌ cid error: {e}")
 
     def run_command(self, command, args):
         """

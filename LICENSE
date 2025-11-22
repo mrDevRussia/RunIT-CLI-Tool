@@ -10,17 +10,21 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 
 
-Disclaimer for p2pmsg feature
+Disclaimer for p2pmsg
 
 The p2pmsg module in RunIT allows users to exchange messages via local or networked sessions using a 16-digit session code. Security measures have been implemented to encrypt and protect messages, but users must acknowledge the following:
 
 1. Local Environment Only: p2pmsg is primarily designed for same-machine or trusted local network usage. Sharing the session code outside trusted environments may expose messages.
 
+
 2. No Liability for Misuse: The author is not responsible for data loss, exposure, or misuse arising from improper configuration, shared access, or attempts to bypass session restrictions.
+
 
 3. Experimental Feature: Some security enhancements, such as authenticated encryption and replay protection, are provided, but they do not guarantee absolute security against determined attackers.
 
+
 4. Resource Limitations: High memory usage may occur on low-RAM systems during encryption operations. Users should ensure sufficient system resources before starting sessions.
+
 
 5. Compliance: Users are responsible for ensuring that usage of p2pmsg complies with local laws regarding encrypted communications.
 
