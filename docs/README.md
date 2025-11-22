@@ -3,7 +3,7 @@
 [![Version](https://img.shields.io/badge/version-1.3.2-blue.svg)](https://github.com/mrDevRussia/RunIT-CLI-Tool_WINDOWS/releases/new)
 [![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg)](https://github.com/mrDevRussia/RunIT-CLI-Tool_WINDOWS)
 [![Python](https://img.shields.io/badge/python-3.8+-green.svg)](https://www.python.org/)
-[![License](https://img.shields.io/badge/license-MIT-orange.svg)](https://github.com/mrDevRussia/RunIT-CLI-Tool_WINDOWS/tree/main?tab=License-1-ov-file#)
+[![License](https://img.shields.io/badge/license-MIT-orange.svg)](https://github.com/mrDevRussia/RunIT-CLI-Tool_WINDOWS/blob/main/LICENSE)
 
 Other platforms:
 [![Platform](https://img.shields.io/badge/platform-Linux-lightgrey.svg)](https://github.com/mrDevRussia/RunIT-CLI-Tool_LINUX)
