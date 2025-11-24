@@ -58,9 +58,8 @@ if %ERRORLEVEL% NEQ 0 (
 echo [INFO] Installing Python dependencies...
 echo.
 
-REM Install Python dependencies from deps/dependencies.txt
-echo [INFO] Installing dependencies from deps/dependencies.txt...
-pip install -r deps/dependencies.txt
+echo [INFO] Installing dependencies from requirements.txt...
+pip install -r requirements.txt
 if %ERRORLEVEL% NEQ 0 (
     echo [ERROR] Failed to install Python dependencies.
     pause
@@ -70,8 +69,7 @@ if %ERRORLEVEL% NEQ 0 (
 echo [INFO] Python dependencies installed successfully.
 echo [INFO] Verifying installations...
 
-REM Verify key dependencies
-python -c "import requests, colorama, tqdm, pathlib, typing, json" >nul 2>&1
+python -c "import requests, cryptography, websockets, psutil, colorama, fastapi, uvicorn, bs4, lxml, PIL, rich" >nul 2>&1
 if %ERRORLEVEL% NEQ 0 (
     echo [WARNING] Some core dependencies may not have installed correctly.
     echo Please run this script again if you encounter any issues when running RunIT.
@@ -139,5 +137,6 @@ echo Or use ngrok as an alternative: https://ngrok.com/
 echo.
 echo Run RunIT.bat to start the tool.
 echo ===============================================
+echo Installed all deps
 
 pause
