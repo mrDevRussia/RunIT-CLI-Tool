@@ -13,3 +13,5 @@ if "%1"=="" (
 ) else (
     python main.py %*
 )
+
+pause

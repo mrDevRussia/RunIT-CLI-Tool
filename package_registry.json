@@ -41,11 +41,13 @@
       "version": "1.0.0",
       "description": "Terminate processes associated with files",
       "main_file": "kill.py",
-      "dependencies": ["psutil"],
+      "dependencies": [
+        "psutil"
+      ],
       "installed": true,
       "install_path": "packages/kill_RunIT"
-    }, 
-"aegis_vanguard_RunIT": {
+    },
+    "aegis_vanguard_RunIT": {
       "name": "aegis_vanguard_RunIT",
       "version": "v1.0.0",
       "description": "Aegis Vanguard is a powerful security scanning tool for websites",
@@ -53,11 +55,11 @@
       "repository": "https://github.com/mrDevRussia/aegis_vanguard_RunIT",
       "installed": true,
       "install_path": "packages/aegis_vanguard_RunIT"
-  }
+    }
   },
   "core_tool": {
     "name": "RunIT",
-    "version": "1.3.1",
-    "last_updated": "2025-08-24 22:44:21"
+    "version": "1.3.2S",
+    "last_updated": "2025-11-22 22:15:49"
   }
 }
