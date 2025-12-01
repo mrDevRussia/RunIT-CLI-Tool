@@ -1,21 +1,33 @@
 MIT License
 
-Copyright (c) 2025 Eng.Karim Mohamed Hanafy El-Shamy
+Copyright (c) 2025 Eng. Karim Mohamed Hanafy El-Shamy
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+Disclaimer for p2pmsg
+
+The p2pmsg module in RunIT allows users to exchange messages via local or networked sessions using a 16-digit session code. Security measures have been implemented to encrypt and protect messages, but users must acknowledge the following:
+
+1. Local Environment Only: p2pmsg is primarily designed for same-machine or trusted local network usage. Sharing the session code outside trusted environments may expose messages.
+
+
+2. No Liability for Misuse: The author is not responsible for data loss, exposure, or misuse arising from improper configuration, shared access, or attempts to bypass session restrictions.
+
+
+3. Experimental Feature: Some security enhancements, such as authenticated encryption and replay protection, are provided, but they do not guarantee absolute security against determined attackers.
+
+
+4. Resource Limitations: High memory usage may occur on low-RAM systems during encryption operations. Users should ensure sufficient system resources before starting sessions.
+
+
+5. Compliance: Users are responsible for ensuring that usage of p2pmsg complies with local laws regarding encrypted communications.
+
+
+
+By using p2pmsg, you acknowledge and accept these terms.
