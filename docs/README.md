@@ -173,7 +173,7 @@ exit / quit                  # Exit RunIT
 
 
 
-RunIT – Tool Patch Update Summary V1.3.2
+## RunIT – Tool Patch Update Summary V1.3.2
 ________________________________________
 
 
@@ -229,7 +229,7 @@ For detailed instructions and beginner‑friendly steps, see docs/P2PMSG_GUIDE.m
 
 
 
-RunIT – Tool Patch Update Summary V1.3.1
+## RunIT – Tool Patch Update Summary V1.3.1
 ________________________________________
 
 
@@ -291,7 +291,7 @@ Version 1.0.0 - August 23 2025
 
 
 
-Version 1.3 Major update summary
+## Version 1.3 Major update summary
 What's New in Version 1.3.0 (August 5, 2025):
 
 -New Commands:
